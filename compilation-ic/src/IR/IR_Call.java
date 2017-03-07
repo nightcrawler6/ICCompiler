@@ -5,7 +5,7 @@ import java.util.List;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_Utils;
+import CODEGEN.CODEGEN_Misc;
 import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
@@ -35,8 +35,8 @@ public class IR_Call extends IR_Node{
 			CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 			printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 			List<CODEGEN_Temporary> ts = args.generateCodeList();
-			CODEGEN_Utils.codeGen_Push(printed, ts.get(0).getName());
-			CODEGEN_Utils.codeGen_Push(printed, zeroTemp.getName());
+			CODEGEN_Misc.codeGen_Push(printed, ts.get(0).getName());
+			CODEGEN_Misc.codeGen_Push(printed, zeroTemp.getName());
 			printed.appendNL(String.format("jal %s", PRINTINT_FUNC_LABEL));
 			CODEGEN_Temporary spOffsetTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 			printed.appendNL(String.format("li %s,%d",spOffsetTemp.getName(), SEMANTIC_SymbolTable.ADDRESS_SIZE*2 ));
@@ -65,13 +65,13 @@ public class IR_Call extends IR_Node{
 		if(args!=null){
 			List<CODEGEN_Temporary> ts = args.generateCodeList();
 			for(int i=ts.size()-1;i>=0;i--){
-				CODEGEN_Utils.codeGen_Push(printed, ts.get(i).getName());
+				CODEGEN_Misc.codeGen_Push(printed, ts.get(i).getName());
 			}
 			spOffset+=ts.size()*SEMANTIC_SymbolTable.ADDRESS_SIZE;
 			
 		}
 		
-		CODEGEN_Utils.codeGen_Push(printed, callerAddressTemp.getName());
+		CODEGEN_Misc.codeGen_Push(printed, callerAddressTemp.getName());
 		printed.appendNL(String.format("mov $t0,%s", functionAddressTemp.getName()));
 		printed.appendNL(String.format("jalr $t0",functionAddressTemp.getName()));
 		CODEGEN_Temporary spOffsetTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();

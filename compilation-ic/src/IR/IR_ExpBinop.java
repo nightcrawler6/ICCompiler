@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_Utils;
+import CODEGEN.CODEGEN_Misc;
 import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
@@ -92,8 +92,8 @@ public class IR_ExpBinop extends IR_EXP {
 										  CODEGEN_Temporary str2Temp, 
 										  CODEGEN_Temporary resultTemp,
 										  CODEGEN_StringAttacher printed) throws IOException{
-		CODEGEN_Utils.codeGen_Push(printed, str2Temp.getName());
-		CODEGEN_Utils.codeGen_Push(printed, str1Temp.getName());
+		CODEGEN_Misc.codeGen_Push(printed, str2Temp.getName());
+		CODEGEN_Misc.codeGen_Push(printed, str1Temp.getName());
 		
 		printed.appendNL(String.format("jal %s", IR_Program.STRCAT_FUNCTION_LABEL));
 		printed.appendNL(String.format("addi $sp, $sp, %d", 2 * SEMANTIC_SymbolTable.ADDRESS_SIZE));

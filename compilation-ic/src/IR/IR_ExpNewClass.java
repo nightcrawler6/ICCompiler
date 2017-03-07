@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_Utils;
+import CODEGEN.CODEGEN_Misc;
 import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_ClassSymbolInfo;
@@ -53,7 +53,7 @@ public class IR_ExpNewClass extends IR_EXP{
 	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TempsPastLimitException{
 		SEMANTIC_ClassSymbolInfo classInfo = SEMANTIC_SymbolTable.getClassSymbolInfo(newExpClassName);
 		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
-		CODEGEN_Temporary addressOnHeap = CODEGEN_Utils.codeGen_malloc(printed,classInfo.size);
+		CODEGEN_Temporary addressOnHeap = CODEGEN_Misc.codeGen_malloc(printed,classInfo.size);
 		generateCodeForStoringVFTableAddress(classInfo, addressOnHeap, printed);
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		generateNullActionForFields(classInfo,addressOnHeap);

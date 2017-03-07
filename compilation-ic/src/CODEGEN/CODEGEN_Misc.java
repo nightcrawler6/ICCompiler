@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
-public class CODEGEN_Utils {
+public class CODEGEN_Misc {
 
 	public static void codeGen_Push(CODEGEN_StringAttacher printed, String pushedObject) throws IOException{
 		printed.appendNL("addi $sp,$sp,-4");

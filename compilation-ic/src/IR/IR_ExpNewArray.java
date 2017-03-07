@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_Utils;
+import CODEGEN.CODEGEN_Misc;
 import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
@@ -49,7 +49,7 @@ public class IR_ExpNewArray extends IR_EXP{
 		printed.appendNL(String.format("addi %s,%s,1", generatedNumOfElementsPlusOne.getName(), generatedNumOfElements.getName()));
 		CODEGEN_Temporary generatedSize = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		printed.appendNL(String.format("mul %s,%s,%s", generatedSize.getName(),generatedNumOfElementsPlusOne.getName(),fourTemp.getName()));
-		CODEGEN_Temporary heapAddress = CODEGEN_Utils.codeGen_malloc(printed,generatedSize);
+		CODEGEN_Temporary heapAddress = CODEGEN_Misc.codeGen_malloc(printed,generatedSize);
 		printed.appendNL(String.format("sw %s,0(%s)",generatedNumOfElements.getName(),heapAddress.getName()));
 		generateNullForArrayElements(heapAddress,generatedNumOfElements,printed);
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());

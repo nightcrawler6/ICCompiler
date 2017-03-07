@@ -6,7 +6,7 @@ import AST.AST_Method;
 import AST.AST_Node;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_Utils;
+import CODEGEN.CODEGEN_Misc;
 import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
@@ -34,7 +34,7 @@ public class IR_Program extends IR_Node {
 		printed.appendNL(String.format("%s:", MAIN_WRAPPER_LABEL));
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
-		CODEGEN_Utils.codeGen_Push(printed,zeroTemp.getName());
+		CODEGEN_Misc.codeGen_Push(printed,zeroTemp.getName());
 		printed.appendNL(String.format("jal %s", SEMANTIC_SymbolTable.mainFunctionLabel));
 		printed.appendNL(String.format("j %s", END_LABEL_NAME));
 	}
@@ -233,7 +233,7 @@ public class IR_Program extends IR_Node {
 										   CODEGEN_Temporary strAddress,
 										   CODEGEN_Temporary strLength) throws IOException
 	{
-		CODEGEN_Utils.codeGen_Push(printed, strAddress.getName());
+		CODEGEN_Misc.codeGen_Push(printed, strAddress.getName());
 		printed.appendNL(String.format("jal %s", STRLEN_FUNCTION_LABEL));
 		printed.appendNL(String.format("addi $sp, $sp, %d", SEMANTIC_SymbolTable.ADDRESS_SIZE));
 		printed.appendNL(String.format("mov %s, $v0", strLength.getName()));
@@ -254,7 +254,7 @@ public class IR_Program extends IR_Node {
 									   concatLength.getName(), 
 									   concatLength.getName()));
 		
-		return CODEGEN_Utils.codeGen_malloc(printed, concatLength);
+		return CODEGEN_Misc.codeGen_malloc(printed, concatLength);
 	}
 	
 	private void writeStrCopyAndPointerPromotion(CODEGEN_StringAttacher printed,
@@ -262,9 +262,9 @@ public class IR_Program extends IR_Node {
 												 CODEGEN_Temporary srcStrAddress,
 												 CODEGEN_Temporary srcStrLength) throws IOException{
 		
-		CODEGEN_Utils.codeGen_Push(printed, srcStrLength.getName());
-		CODEGEN_Utils.codeGen_Push(printed, srcStrAddress.getName());
-		CODEGEN_Utils.codeGen_Push(printed, dstStrPtr.getName());
+		CODEGEN_Misc.codeGen_Push(printed, srcStrLength.getName());
+		CODEGEN_Misc.codeGen_Push(printed, srcStrAddress.getName());
+		CODEGEN_Misc.codeGen_Push(printed, dstStrPtr.getName());
 		
 		printed.appendNL(String.format("jal %s", MEMCPY_FUNCTION_LABEL));
 		printed.appendNL(String.format("addi $sp, $sp, %d", 3 * SEMANTIC_SymbolTable.ADDRESS_SIZE));

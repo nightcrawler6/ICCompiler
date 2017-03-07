@@ -5,7 +5,7 @@ import java.io.IOException;
 import AST.AST_Node;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_Utils;
+import CODEGEN.CODEGEN_Misc;
 import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
@@ -30,8 +30,8 @@ public class IR_Method extends IR_Node
 	}
 	
 	public static void appendProlog(CODEGEN_StringAttacher printed, int funcFrameSize) throws IOException{
-		CODEGEN_Utils.codeGen_Push(printed, "$ra");
-		CODEGEN_Utils.codeGen_Push(printed, "$fp");
+		CODEGEN_Misc.codeGen_Push(printed, "$ra");
+		CODEGEN_Misc.codeGen_Push(printed, "$fp");
 		printed.appendNL("mov $fp, $sp");
 		printed.appendNL(String.format("addi $sp,$sp,%d", funcFrameSize*(-1)));
 	}
@@ -44,8 +44,8 @@ public class IR_Method extends IR_Node
 	
 	public static void appendEpilog(CODEGEN_StringAttacher printed) throws IOException{
 		printed.appendNL("mov $sp, $fp");
-		CODEGEN_Utils.codeGen_Pop(printed, "$fp");
-		CODEGEN_Utils.codeGen_Pop(printed, "$ra");
+		CODEGEN_Misc.codeGen_Pop(printed, "$fp");
+		CODEGEN_Misc.codeGen_Pop(printed, "$ra");
 		printed.appendNL("jr $ra");
 	}
 	
