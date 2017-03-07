@@ -18,7 +18,7 @@ public class Main
 	static public void main(String argv[]) throws Exception
 	{
 		Lexer l;
-		CUP_FILECup p;
+		Parser p;
 		FileReader file_reader;
 		String inputFileName = argv[0];
 		String outputFileName = argv[1];
@@ -40,7 +40,7 @@ public class Main
 			/*******************************/
 			/* [4] Initialize a new parser */
 			/*******************************/
-			p = new CUP_FILECup(l);
+			p = new Parser(l);
 			SEMANTIC_SymbolTable.hashTable.clear();
 			Symbol temp=p.parse();
 			AST_Program astNode = (AST_Program)temp.value;

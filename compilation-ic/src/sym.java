@@ -4,7 +4,7 @@
 //----------------------------------------------------
 
 /** CUP generated class containing symbol constants. */
-public class CUP_FILESym {
+public class sym {
   /* terminals */
   public static final int DIVIDE = 5;
   public static final int LTE = 30;

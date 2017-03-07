@@ -721,7 +721,7 @@ class Lexer implements java_cup.runtime.Scanner {
         zzAtEOF = true;
             zzDoEOF();
           { 				System.out.printf("%d: EOF", yyline + 2);
-				return symbol(CUP_FILESym.EOF);
+				return symbol(sym.EOF);
 		
  }
       }
@@ -736,23 +736,23 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 50: break;
           case 3: 
-            { return symbol(CUP_FILESym.INTEGER, new Integer(yytext()));
+            { return symbol(sym.INTEGER, new Integer(yytext()));
             }
           case 51: break;
           case 4: 
-            { return symbol(CUP_FILESym.ID, new String(yytext()));
+            { return symbol(sym.ID, new String(yytext()));
             }
           case 52: break;
           case 5: 
-            { return symbol(CUP_FILESym.CLASS_ID, new String(yytext()));
+            { return symbol(sym.CLASS_ID, new String(yytext()));
             }
           case 53: break;
           case 6: 
-            { return symbol(CUP_FILESym.DIVIDE);
+            { return symbol(sym.DIVIDE);
             }
           case 54: break;
           case 7: 
-            { return symbol(CUP_FILESym.TIMES);
+            { return symbol(sym.TIMES);
             }
           case 55: break;
           case 8: 
@@ -760,67 +760,67 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 56: break;
           case 9: 
-            { return symbol(CUP_FILESym.PLUS);
+            { return symbol(sym.PLUS);
             }
           case 57: break;
           case 10: 
-            { return symbol(CUP_FILESym.MINUS);
+            { return symbol(sym.MINUS);
             }
           case 58: break;
           case 11: 
-            { return symbol(CUP_FILESym.LPAREN);
+            { return symbol(sym.LPAREN);
             }
           case 59: break;
           case 12: 
-            { return symbol(CUP_FILESym.RPAREN);
+            { return symbol(sym.RPAREN);
             }
           case 60: break;
           case 13: 
-            { return symbol(CUP_FILESym.ASSIGN);
+            { return symbol(sym.ASSIGN);
             }
           case 61: break;
           case 14: 
-            { return symbol(CUP_FILESym.COMMA);
+            { return symbol(sym.COMMA);
             }
           case 62: break;
           case 15: 
-            { return symbol(CUP_FILESym.DOT);
+            { return symbol(sym.DOT);
             }
           case 63: break;
           case 16: 
-            { return symbol(CUP_FILESym.LBRACK);
+            { return symbol(sym.LBRACK);
             }
           case 64: break;
           case 17: 
-            { return symbol(CUP_FILESym.LBRACE);
+            { return symbol(sym.LBRACE);
             }
           case 65: break;
           case 18: 
-            { return symbol(CUP_FILESym.LNEG);
+            { return symbol(sym.LNEG);
             }
           case 66: break;
           case 19: 
-            { return symbol(CUP_FILESym.LT);
+            { return symbol(sym.LT);
             }
           case 67: break;
           case 20: 
-            { return symbol(CUP_FILESym.MOD);
+            { return symbol(sym.MOD);
             }
           case 68: break;
           case 21: 
-            { return symbol(CUP_FILESym.RBRACK);
+            { return symbol(sym.RBRACK);
             }
           case 69: break;
           case 22: 
-            { return symbol(CUP_FILESym.RBRACE);
+            { return symbol(sym.RBRACE);
             }
           case 70: break;
           case 23: 
-            { return symbol(CUP_FILESym.SEMICOLON);
+            { return symbol(sym.SEMICOLON);
             }
           case 71: break;
           case 24: 
-            { return symbol(CUP_FILESym.GT);
+            { return symbol(sym.GT);
             }
           case 72: break;
           case 25: 
@@ -829,7 +829,7 @@ class Lexer implements java_cup.runtime.Scanner {
           case 73: break;
           case 26: 
             { yybegin(YYINITIAL); 
-                                       return symbol(CUP_FILESym.QUOTE, 
+                                       return symbol(sym.QUOTE, 
                                        string.toString());
             }
           case 74: break;
@@ -842,31 +842,31 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 76: break;
           case 29: 
-            { return symbol(CUP_FILESym.EQUAL);
+            { return symbol(sym.EQUAL);
             }
           case 77: break;
           case 30: 
-            { return symbol(CUP_FILESym.IF);
+            { return symbol(sym.IF);
             }
           case 78: break;
           case 31: 
-            { return symbol(CUP_FILESym.LAND);
+            { return symbol(sym.LAND);
             }
           case 79: break;
           case 32: 
-            { return symbol(CUP_FILESym.NEQUAL);
+            { return symbol(sym.NEQUAL);
             }
           case 80: break;
           case 33: 
-            { return symbol(CUP_FILESym.LOR);
+            { return symbol(sym.LOR);
             }
           case 81: break;
           case 34: 
-            { return symbol(CUP_FILESym.LTE);
+            { return symbol(sym.LTE);
             }
           case 82: break;
           case 35: 
-            { return symbol(CUP_FILESym.GTE);
+            { return symbol(sym.GTE);
             }
           case 83: break;
           case 36: 
@@ -886,39 +886,39 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 87: break;
           case 40: 
-            { return symbol(CUP_FILESym.NEW);
+            { return symbol(sym.NEW);
             }
           case 88: break;
           case 41: 
-            { return symbol(CUP_FILESym.INT);
+            { return symbol(sym.INT);
             }
           case 89: break;
           case 42: 
-            { return symbol(CUP_FILESym.NULL);
+            { return symbol(sym.NULL);
             }
           case 90: break;
           case 43: 
-            { return symbol(CUP_FILESym.VOID);
+            { return symbol(sym.VOID);
             }
           case 91: break;
           case 44: 
-            { return symbol(CUP_FILESym.CLASS);
+            { return symbol(sym.CLASS);
             }
           case 92: break;
           case 45: 
-            { return symbol(CUP_FILESym.WHILE);
+            { return symbol(sym.WHILE);
             }
           case 93: break;
           case 46: 
-            { return symbol(CUP_FILESym.STRING);
+            { return symbol(sym.STRING);
             }
           case 94: break;
           case 47: 
-            { return symbol(CUP_FILESym.RETURN);
+            { return symbol(sym.RETURN);
             }
           case 95: break;
           case 48: 
-            { return symbol(CUP_FILESym.EXTENDS);
+            { return symbol(sym.EXTENDS);
             }
           case 96: break;
           default:
