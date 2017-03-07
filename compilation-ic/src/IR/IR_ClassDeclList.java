@@ -6,11 +6,11 @@ import SEMANTIC.SEMANTIC_SemanticAnalysisException;
 
 public class IR_ClassDeclList extends IR_Node {
 
-	public IR_CLASS_DECL head;
+	public IR_ClassDecl head;
 	public IR_ClassDeclList tail;
 	public String mainLabel;
 	
-	public IR_ClassDeclList(IR_CLASS_DECL head, IR_ClassDeclList tail){
+	public IR_ClassDeclList(IR_ClassDecl head, IR_ClassDeclList tail){
 		this.head = head;
 		this.tail = tail;
 	}

@@ -1,5 +1,5 @@
 package AST;
-import IR.IR_CLASS_DECL;
+import IR.IR_ClassDecl;
 import IR.IR_MethodList;
 import SEMANTIC.*;
 public class AST_ClassDecl extends AST_Node{
@@ -62,7 +62,7 @@ public class AST_ClassDecl extends AST_Node{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	public IR_CLASS_DECL createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ClassDecl createIR() throws SEMANTIC_SemanticAnalysisException{
 		IR_MethodList classMethods=null;
 		SEMANTIC_ClassSymbolInfo classSymbolInfo=new SEMANTIC_ClassSymbolInfo(this.currentClassName, this.extendsClassName, null, null);
 		SEMANTIC_SymbolTable.insertNewSymbol(classSymbolInfo);
@@ -74,7 +74,7 @@ public class AST_ClassDecl extends AST_Node{
 		}
 		SEMANTIC_SymbolTable.closeCurrentScope();
 		
-		return new IR_CLASS_DECL(classMethods);
+		return new IR_ClassDecl(classMethods);
 	}
 	
 }
