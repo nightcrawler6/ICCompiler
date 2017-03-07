@@ -4,7 +4,7 @@ import IR.IR_EXP;
 import IR.IR_LiteralConstant;
 import IR.IR_LiteralString;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_ExpLiteral extends AST_Exp{
 	public AST_Literal l;
@@ -15,7 +15,7 @@ public class AST_ExpLiteral extends AST_Exp{
 	}
 
 
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException
 	{
 		return l.validate(className);
 	}

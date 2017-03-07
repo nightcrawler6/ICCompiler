@@ -7,9 +7,9 @@ import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import SEMANTIC.SEMANTIC_TooManyTempsException;
+import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class IR_ExpNewArray extends IR_EXP{
 	public IR_EXP size;
@@ -18,7 +18,7 @@ public class IR_ExpNewArray extends IR_EXP{
 		this.size=size;
 	}
 	
-	public void generateNullForArrayElements(CODEGEN_Temporary addressOnHeap,CODEGEN_Temporary arraySize,CODEGEN_StringNLBuilder printed) throws IOException, SEMANTIC_TooManyTempsException{			
+	public void generateNullForArrayElements(CODEGEN_Temporary addressOnHeap,CODEGEN_Temporary arraySize,CODEGEN_StringNLBuilder printed) throws IOException, SEMANTIC_TempsPastLimitException{			
 		CODEGEN_Temporary currIndex = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary tempIterator = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -40,7 +40,7 @@ public class IR_ExpNewArray extends IR_EXP{
 	}
 		
 	@Override
-	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_SemanticAnalysisException{
+	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		CODEGEN_Temporary generatedNumOfElements = this.size.generateCode();
 		CODEGEN_Temporary generatedNumOfElementsPlusOne = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();

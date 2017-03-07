@@ -9,12 +9,12 @@ import IR.IR_ExpBinop;
 import IR.IR_ExpList;
 import IR.IR_ExpMemory;
 import IR.IR_LiteralConstant;
-import SEMANTIC.SEMANTIC_ClassIsNotInSymbolTableException;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
-import SEMANTIC.SEMANTIC_FunctionNotInSymbolTableException;
+import SEMANTIC.SEMANTIC_NoSuchClassInTableException;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
+import SEMANTIC.SEMANTIC_NoSuchMethodInTableException;
 import SEMANTIC.SEMANTIC_FunctionSymbolInfo;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import UTILS.DebugPrint;
@@ -32,7 +32,7 @@ public class AST_Call extends AST_Node{
 		this.args = args;
 	}
 	
-	private SEMANTIC_SymbolInfo getObjectSymbolInfo(String className) throws SEMANTIC_SemanticAnalysisException{
+	private SEMANTIC_SymbolInfo getObjectSymbolInfo(String className) throws SEMANTIC_SemanticErrorException{
 		
 		SEMANTIC_ICTypeInfo callerTypeInfo = caller.validate(className);
 		if (callerTypeInfo == null){
@@ -60,7 +60,7 @@ public class AST_Call extends AST_Node{
 		return symbolInfo;
 	}
 	
-	private SEMANTIC_FunctionSymbolInfo getFunctionSymbolInfo(String className) throws SEMANTIC_SemanticAnalysisException{
+	private SEMANTIC_FunctionSymbolInfo getFunctionSymbolInfo(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_SymbolInfo functionSymbolInfo = null;
 		
 		if (caller == null){
@@ -87,7 +87,7 @@ public class AST_Call extends AST_Node{
 	}
 	
 	private boolean validateSingleActualArgument(SEMANTIC_ICTypeInfo formalArgumentType, 
-			AST_Exp actualArgument, String className) throws SEMANTIC_SemanticAnalysisException{
+			AST_Exp actualArgument, String className) throws SEMANTIC_SemanticErrorException{
 
 		SEMANTIC_ICTypeInfo actualArgumentType = actualArgument.validate(className);
 		if (actualArgumentType == null){
@@ -106,7 +106,7 @@ public class AST_Call extends AST_Node{
 	}
 	
 	private boolean validateActualArguments(List<SEMANTIC_ICTypeInfo> formalArgumentTypes, 
-			AST_ExpList actualArguments, String className) throws SEMANTIC_SemanticAnalysisException{
+			AST_ExpList actualArguments, String className) throws SEMANTIC_SemanticErrorException{
 
 		if ((formalArgumentTypes == null) || (formalArgumentTypes.size() == 0)){
 			if ((actualArguments == null) || (actualArguments.head == null)){
@@ -132,7 +132,7 @@ public class AST_Call extends AST_Node{
 	}
 	
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 
 		SEMANTIC_FunctionSymbolInfo functionSymbolInfo = getFunctionSymbolInfo(className);
 		if (functionSymbolInfo == null){
@@ -145,7 +145,7 @@ public class AST_Call extends AST_Node{
 		return functionSymbolInfo.returnType;
 	}
 	
-	private void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	private void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		if (caller != null){
@@ -159,7 +159,7 @@ public class AST_Call extends AST_Node{
 		}
 	}
 	
-	private IR_EXP getCallerAddress() throws SEMANTIC_SemanticAnalysisException{
+	private IR_EXP getCallerAddress() throws SEMANTIC_SemanticErrorException{
 		if (caller == null){
 			return getThisObjectHeapAddress();
 		}
@@ -168,20 +168,20 @@ public class AST_Call extends AST_Node{
 		}
 	}
 	
-	private IR_EXP getFunctionOffsetInCallerVirtualTable() throws SEMANTIC_FunctionNotInSymbolTableException, SEMANTIC_ClassIsNotInSymbolTableException{
+	private IR_EXP getFunctionOffsetInCallerVirtualTable() throws SEMANTIC_NoSuchMethodInTableException, SEMANTIC_NoSuchClassInTableException{
 		if (callerClassName == null){
 			callerClassName = currentClassName;
 		}
 		
 		SEMANTIC_SymbolInfo calledFunctionInfo = SEMANTIC_SymbolTable.searchSymbolInfoInClassAndUp(callerClassName, calledFunctionName);
 		if ((calledFunctionInfo == null) || (!(calledFunctionInfo instanceof SEMANTIC_FunctionSymbolInfo))){
-			throw new SEMANTIC_FunctionNotInSymbolTableException(callerClassName, calledFunctionName);
+			throw new SEMANTIC_NoSuchMethodInTableException(callerClassName, calledFunctionName);
 		}
 		
 		return new IR_LiteralConstant(((SEMANTIC_FunctionSymbolInfo)calledFunctionInfo).offset);
 	}
 	
-	private IR_EXP getCalledFunctionAddress(IR_EXP callerAddress) throws SEMANTIC_FunctionNotInSymbolTableException, SEMANTIC_ClassIsNotInSymbolTableException{
+	private IR_EXP getCalledFunctionAddress(IR_EXP callerAddress) throws SEMANTIC_NoSuchMethodInTableException, SEMANTIC_NoSuchClassInTableException{
 		IR_EXP callerVirtualTableAddress = new IR_ExpMemory(callerAddress); 
 		
 		IR_EXP calledFunctionOffset = getFunctionOffsetInCallerVirtualTable();
@@ -194,7 +194,7 @@ public class AST_Call extends AST_Node{
 		return virtualTableEntryContent;
 	}
 	
-	public IR_Call createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_Call createIR() throws SEMANTIC_SemanticErrorException{
 		bequeathClassAndFunctionNamesToChildren();
 		
 		if(calledFunctionName.equals(SEMANTIC_SymbolTable.PRINTINT_FUNC_SYMBOL_NAME)){

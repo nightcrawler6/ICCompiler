@@ -6,7 +6,7 @@ import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_StatementWhile extends IR_StatementCondition{
 	public IR_StatementWhile(IR_EXP cond, IR_Statement body, String labelName){
@@ -14,7 +14,7 @@ public class IR_StatementWhile extends IR_StatementCondition{
 	}
 
 	@Override
-	public void generateCode() throws IOException, SEMANTIC_SemanticAnalysisException 
+	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException 
 	{
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		

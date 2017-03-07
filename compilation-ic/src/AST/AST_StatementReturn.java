@@ -3,10 +3,10 @@ package AST;
 import IR.IR_EXP;
 import IR.IR_Method;
 import IR.IR_StatementReturn;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
-import SEMANTIC.SEMANTIC_ExpectedReturnTypeIsNotInitializedException;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
+import SEMANTIC.SEMANTIC_NoInitForReturnTypeException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import UTILS.DebugPrint;
 
@@ -26,7 +26,7 @@ public class AST_StatementReturn extends AST_Statement{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	private SEMANTIC_ICTypeInfo validateValuedReturn(String className) throws SEMANTIC_SemanticAnalysisException{
+	private SEMANTIC_ICTypeInfo validateValuedReturn(String className) throws SEMANTIC_SemanticErrorException{
 		if (returnedExpression == null){
 			DebugPrint.print("AST_STMT_RETURN.validateValuedReturn: The statement doesn't return a value.");
 			return null;
@@ -50,9 +50,9 @@ public class AST_StatementReturn extends AST_Statement{
 	}
 
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		if (expectedReturnType == null){
-			throw new SEMANTIC_ExpectedReturnTypeIsNotInitializedException();
+			throw new SEMANTIC_NoInitForReturnTypeException();
 		}
 		else if (expectedReturnType.ICType.equals(SEMANTIC_ICTypeInfo.IC_TYPE_VOID)){
 			return validateEmptyReturn();
@@ -62,7 +62,7 @@ public class AST_StatementReturn extends AST_Statement{
 		}
 	}
 	
-	private void bequeathClassAndFunctionNamesToChild() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	private void bequeathClassAndFunctionNamesToChild() throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		if (returnedExpression != null){
@@ -72,7 +72,7 @@ public class AST_StatementReturn extends AST_Statement{
 	}
 	
 	@Override
-	public IR_StatementReturn createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_StatementReturn createIR() throws SEMANTIC_SemanticErrorException{
 		bequeathClassAndFunctionNamesToChild();
 		
 		IR_EXP returnedExpressionIR = null;

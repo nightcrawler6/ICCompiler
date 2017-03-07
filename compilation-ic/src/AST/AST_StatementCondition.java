@@ -1,8 +1,8 @@
 package AST;
 
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import UTILS.DebugPrint;
 
@@ -16,7 +16,7 @@ public abstract class AST_StatementCondition extends AST_Statement{
 	}
 
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo conditionTypeInfo = cond.validate(className);
 		if (conditionTypeInfo == null){
 			DebugPrint.print("AST_STMT_COND.validate: The condition isn't valid");
@@ -41,7 +41,7 @@ public abstract class AST_StatementCondition extends AST_Statement{
 		return new SEMANTIC_ICTypeInfo();
 	}
 
-	protected void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	protected void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		cond.currentClassName = this.currentClassName;

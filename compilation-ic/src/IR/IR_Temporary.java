@@ -6,7 +6,7 @@ import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_TooManyTempsException;
+import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class IR_Temporary extends IR_EXP{
 	IR_TemporaryType tempType;
@@ -14,7 +14,7 @@ public class IR_Temporary extends IR_EXP{
 		this.tempType=tempType;
 	}
 	
-	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TooManyTempsException{
+	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary newTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
 		

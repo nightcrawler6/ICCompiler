@@ -5,7 +5,7 @@ import IR.IR_Method;
 import IR.IR_StatementList;
 import SEMANTIC.SEMANTIC_FunctionSymbolInfo;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import UTILS.DebugPrint;
@@ -27,7 +27,7 @@ public class AST_Method extends AST_FieldMethod{
 		this.body=body;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{		
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{		
 
 		if(returnArgumentType==null){
 			this.body.expectedReturnType=new SEMANTIC_ICTypeInfo(SEMANTIC_ICTypeInfo.IC_TYPE_VOID,0);
@@ -84,7 +84,7 @@ public class AST_Method extends AST_FieldMethod{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	public IR_Method createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_Method createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		SEMANTIC_FunctionSymbolInfo methodSymbolInfo = new SEMANTIC_FunctionSymbolInfo(currentFunctionName,this.body.expectedReturnType,null);
 		methodSymbolInfo.isMainFunc = this.isMainFunc;

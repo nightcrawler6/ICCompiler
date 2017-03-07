@@ -1,8 +1,8 @@
 package AST;
 
-import SEMANTIC.SEMANTIC_FunctionNameInFormalsListIsNotInitializedException;
+import SEMANTIC.SEMANTIC_NoInitForFormalMethodException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
 import UTILS.DebugPrint;
@@ -20,9 +20,9 @@ public class AST_FormalsList extends AST_Node{
 		this.formal_name=formal_name;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		if(this.currentFunctionName==null){
-			throw new SEMANTIC_FunctionNameInFormalsListIsNotInitializedException();
+			throw new SEMANTIC_NoInitForFormalMethodException();
 		}
 		else{
 			formalICType=this.formal_type.validate(className);
@@ -62,7 +62,7 @@ public class AST_FormalsList extends AST_Node{
 		return ((this.tail==null)&&(this.formal_name==null));
 	}
 	
-	public void createIR() throws SEMANTIC_SemanticAnalysisException{
+	public void createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		SEMANTIC_VariableSymbolInfo formalInfo=new SEMANTIC_VariableSymbolInfo(formal_name, formalICType,this.formalFrameOffset, false);
 		SEMANTIC_SymbolTable.addFormalToMethod(currentClassName,currentFunctionName, formalInfo);

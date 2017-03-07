@@ -2,7 +2,7 @@ package AST;
 
 import IR.IR_Method;
 import IR.IR_MethodList;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_FieldMethodList extends AST_Node{
 	public AST_FieldMethod head;
@@ -28,7 +28,7 @@ public class AST_FieldMethodList extends AST_Node{
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	public IR_MethodList createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_MethodList createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassNameInitialized();
 		
 		if (head == null){

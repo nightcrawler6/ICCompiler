@@ -81,7 +81,7 @@ public class SEMANTIC_SymbolTable{
 		return false;
 	}
 	
-	public static SEMANTIC_SymbolInfo searchSymbolInfoInClassAndUp(String className, String symbolName) throws SEMANTIC_ClassIsNotInSymbolTableException{
+	public static SEMANTIC_SymbolInfo searchSymbolInfoInClassAndUp(String className, String symbolName) throws SEMANTIC_NoSuchClassInTableException{
 		SEMANTIC_SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
 		if(classSymbolInfoNode!=null)
 		{
@@ -108,16 +108,16 @@ public class SEMANTIC_SymbolTable{
 				}
 			}
 			else{
-				throw new SEMANTIC_ClassIsNotInSymbolTableException();
+				throw new SEMANTIC_NoSuchClassInTableException();
 			}
 			
 		}
 		else{
-			throw new SEMANTIC_ClassIsNotInSymbolTableException();
+			throw new SEMANTIC_NoSuchClassInTableException();
 		}
 	}
 	
-	public static SEMANTIC_SymbolInfo searchSymbolInfoLocallyOrInCurrentClassAndUp(String currenClassName,String symbolName) throws SEMANTIC_ClassIsNotInSymbolTableException{
+	public static SEMANTIC_SymbolInfo searchSymbolInfoLocallyOrInCurrentClassAndUp(String currenClassName,String symbolName) throws SEMANTIC_NoSuchClassInTableException{
 		SEMANTIC_SymbolInfoNode classSymbolInfoNode = hashTable.get(symbolName);
 		if(classSymbolInfoNode!=null){
 			return classSymbolInfoNode.symbolInfo;
@@ -127,7 +127,7 @@ public class SEMANTIC_SymbolTable{
 		}
 	}
 	
-	public static boolean addFormalToMethod(String className,String functionName, SEMANTIC_VariableSymbolInfo formal) throws SEMANTIC_SemanticAnalysisException{
+	public static boolean addFormalToMethod(String className,String functionName, SEMANTIC_VariableSymbolInfo formal) throws SEMANTIC_SemanticErrorException{
 		if(SEMANTIC_SymbolTable.doesSymbolExistInCurrentScope(formal.symbolName)==true){
 			return false;
 		}
@@ -151,7 +151,7 @@ public class SEMANTIC_SymbolTable{
 		
 	}
 	
-	public static void addMethodToClass(String className, SEMANTIC_FunctionSymbolInfo methodInfo) throws SEMANTIC_ClassIsNotInSymbolTableException{
+	public static void addMethodToClass(String className, SEMANTIC_FunctionSymbolInfo methodInfo) throws SEMANTIC_NoSuchClassInTableException{
 		SEMANTIC_SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
 		if(classSymbolInfoNode!=null){
 			SEMANTIC_SymbolInfo symbolInfo=classSymbolInfoNode.symbolInfo;
@@ -159,15 +159,15 @@ public class SEMANTIC_SymbolTable{
 				((SEMANTIC_ClassSymbolInfo) symbolInfo).addMethod(methodInfo);
 			}
 			else{
-				throw new SEMANTIC_ClassIsNotInSymbolTableException();
+				throw new SEMANTIC_NoSuchClassInTableException();
 			}
 		}
 		else{
-			throw new SEMANTIC_ClassIsNotInSymbolTableException();
+			throw new SEMANTIC_NoSuchClassInTableException();
 		}
 	}
 	
-	public static void addFieldToClass(String className, SEMANTIC_VariableSymbolInfo fieldInfo) throws SEMANTIC_ClassIsNotInSymbolTableException{
+	public static void addFieldToClass(String className, SEMANTIC_VariableSymbolInfo fieldInfo) throws SEMANTIC_NoSuchClassInTableException{
 		SEMANTIC_SymbolInfoNode classSymbolInfoNode= hashTable.get(className);
 		if(classSymbolInfoNode!=null){
 			SEMANTIC_SymbolInfo symbolInfo=classSymbolInfoNode.symbolInfo;
@@ -175,11 +175,11 @@ public class SEMANTIC_SymbolTable{
 				((SEMANTIC_ClassSymbolInfo) symbolInfo).addField(fieldInfo);
 			}
 			else{
-				throw new SEMANTIC_ClassIsNotInSymbolTableException();
+				throw new SEMANTIC_NoSuchClassInTableException();
 			}
 		}
 		else{
-			throw new SEMANTIC_ClassIsNotInSymbolTableException();
+			throw new SEMANTIC_NoSuchClassInTableException();
 		}
 	}
 	
@@ -207,7 +207,7 @@ public class SEMANTIC_SymbolTable{
 		return null;
 	}
 	
-	public static boolean validatePredeccessor(SEMANTIC_ICTypeInfo predeccessor, SEMANTIC_ICTypeInfo descendent) throws SEMANTIC_SemanticAnalysisException{
+	public static boolean validatePredeccessor(SEMANTIC_ICTypeInfo predeccessor, SEMANTIC_ICTypeInfo descendent) throws SEMANTIC_SemanticErrorException{
 		if (predeccessor.ICType.equals(SEMANTIC_ICTypeInfo.IC_TYPE_NULL)){
 			return descendent.ICType.equals(SEMANTIC_ICTypeInfo.IC_TYPE_NULL);
 		}
@@ -253,7 +253,7 @@ public class SEMANTIC_SymbolTable{
 		return false;
 	}
 	
-	public static boolean doesOneMainExistInProgram() throws SEMANTIC_ClassIsNotInSymbolTableException{
+	public static boolean doesOneMainExistInProgram() throws SEMANTIC_NoSuchClassInTableException{
 		int count=0;
 		
 		SEMANTIC_SymbolInfoNode node=hashTable.get(SCOPE_SYMBOL_NAME);
@@ -261,7 +261,7 @@ public class SEMANTIC_SymbolTable{
 		node=node.nextSymbolInScope;
 		while(node!=null){
 			if(!(node.symbolInfo instanceof SEMANTIC_ClassSymbolInfo)){
-				throw new SEMANTIC_ClassIsNotInSymbolTableException();
+				throw new SEMANTIC_NoSuchClassInTableException();
 			}
 			
 			SEMANTIC_ClassSymbolInfo temp=(SEMANTIC_ClassSymbolInfo)node.symbolInfo;

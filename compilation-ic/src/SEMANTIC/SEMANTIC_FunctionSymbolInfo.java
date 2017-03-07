@@ -61,9 +61,9 @@ public class SEMANTIC_FunctionSymbolInfo extends SEMANTIC_SymbolInfo{
 		return true;
 	}
 	
-	public boolean validateMainIsValid() throws SEMANTIC_FunctionIsNotMainException{
+	public boolean validateMainIsValid() throws SEMANTIC_NotMainMethodException{
 		if(!this.symbolName.equals(SEMANTIC_SymbolTable.MAIN_FUNC_SYMBOL_NAME)){
-			throw new SEMANTIC_FunctionIsNotMainException();
+			throw new SEMANTIC_NotMainMethodException();
 		}
 		
 		if((this.argumentsTypes == null) || (this.argumentsTypes.size()!=1)){

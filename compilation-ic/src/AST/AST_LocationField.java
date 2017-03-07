@@ -2,7 +2,7 @@ package AST;
 
 import IR.IR_ExpLocationField;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
@@ -18,7 +18,7 @@ public class AST_LocationField extends AST_Location{
 		this.fieldName = fieldName;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo varInfo = var.validate(className);
 		if(varInfo==null){
 			return null;
@@ -45,7 +45,7 @@ public class AST_LocationField extends AST_Location{
 	}
 	
 	@Override
-	public IR_ExpLocationField createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ExpLocationField createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		SEMANTIC_VariableSymbolInfo fieldFound = (SEMANTIC_VariableSymbolInfo)SEMANTIC_SymbolTable.searchSymbolInfoInClassAndUp(varClass,fieldName);
 		this.var.currentClassName=this.currentClassName;

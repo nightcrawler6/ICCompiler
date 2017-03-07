@@ -1,7 +1,7 @@
 package AST;
 
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_TypeClass extends AST_Type{
 	public String typeClassName;
@@ -10,7 +10,7 @@ public class AST_TypeClass extends AST_Type{
 		this.typeClassName = typeClassName;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String receivedClassName) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String receivedClassName) throws SEMANTIC_SemanticErrorException{
 		if(SEMANTIC.SEMANTIC_SymbolTable.doesClassExist(typeClassName)){
 			return new SEMANTIC_ICTypeInfo(typeClassName, 0);
 		}

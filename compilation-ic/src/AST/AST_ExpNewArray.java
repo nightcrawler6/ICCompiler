@@ -3,7 +3,7 @@ package AST;
 import IR.IR_EXP;
 import IR.IR_ExpNewArray;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_ExpNewArray extends AST_Exp{
 	public AST_Type type;
@@ -15,7 +15,7 @@ public class AST_ExpNewArray extends AST_Exp{
 	}
 	
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo typeInfo = type.validate(className);
 		SEMANTIC_ICTypeInfo sizeInfo = size.validate(className);
 		
@@ -30,7 +30,7 @@ public class AST_ExpNewArray extends AST_Exp{
 
 
 	@Override
-	public IR_EXP createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_EXP createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		this.size.currentFunctionName=this.currentFunctionName;
 		this.size.currentClassName=this.currentClassName;

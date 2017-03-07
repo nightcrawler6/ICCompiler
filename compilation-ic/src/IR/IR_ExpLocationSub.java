@@ -6,7 +6,7 @@ import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_ExpLocationSub extends IR_EXP{
 	public IR_EXP arrayBase;
@@ -18,7 +18,7 @@ public class IR_ExpLocationSub extends IR_EXP{
 	}
 	
 	@Override
-	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_SemanticAnalysisException{
+	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		CODEGEN_Temporary resultTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary arrayBaseTemp = arrayBase.generateCode();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();

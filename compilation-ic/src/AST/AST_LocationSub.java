@@ -3,7 +3,7 @@ package AST;
 import IR.IR_EXP;
 import IR.IR_ExpLocationSub;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import UTILS.DebugPrint;
 
 public class AST_LocationSub extends AST_Location{
@@ -15,7 +15,7 @@ public class AST_LocationSub extends AST_Location{
 		this.subscript = subscript;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo varInfo = var.validate(className);
 		SEMANTIC_ICTypeInfo subscriptInfo = subscript.validate(className);
 		
@@ -33,7 +33,7 @@ public class AST_LocationSub extends AST_Location{
 	}
 	
 	@Override
-	public IR_EXP createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_EXP createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		this.var.currentClassName=this.currentClassName;
 		this.var.currentFunctionName=this.currentFunctionName;

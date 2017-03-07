@@ -2,7 +2,7 @@ package IR;
 
 import java.io.IOException;
 
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_MethodList extends IR_Node{
 	public IR_Method head;
@@ -13,7 +13,7 @@ public class IR_MethodList extends IR_Node{
 		this.tail = tail;
 	}
 	
-	public void generateCode() throws IOException, SEMANTIC_SemanticAnalysisException{
+	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		if (head != null){
 			head.generateCode();
 			if(this.tail!=null){

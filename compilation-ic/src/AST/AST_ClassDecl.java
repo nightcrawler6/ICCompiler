@@ -13,7 +13,7 @@ public class AST_ClassDecl extends AST_Node{
 		this.extendsClassName=extendsClassName;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String receivedClassName) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String receivedClassName) throws SEMANTIC_SemanticErrorException{
 
 		if(this.extendsClassName!=null){
 			if(SEMANTIC_SymbolTable.doesClassExist(extendsClassName) == false){
@@ -62,7 +62,7 @@ public class AST_ClassDecl extends AST_Node{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	public IR_ClassDecl createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ClassDecl createIR() throws SEMANTIC_SemanticErrorException{
 		IR_MethodList classMethods=null;
 		SEMANTIC_ClassSymbolInfo classSymbolInfo=new SEMANTIC_ClassSymbolInfo(this.currentClassName, this.extendsClassName, null, null);
 		SEMANTIC_SymbolTable.insertNewSymbol(classSymbolInfo);

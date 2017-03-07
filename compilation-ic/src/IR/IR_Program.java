@@ -9,9 +9,9 @@ import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import SEMANTIC.SEMANTIC_TooManyTempsException;
+import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class IR_Program extends IR_Node {
 
@@ -30,7 +30,7 @@ public class IR_Program extends IR_Node {
 		this.classDeclList = classDeclList;
 	}
 
-	public void writeMainWrapper(CODEGEN_StringNLBuilder printed) throws IOException, SEMANTIC_TooManyTempsException{
+	public void writeMainWrapper(CODEGEN_StringNLBuilder printed) throws IOException, SEMANTIC_TempsPastLimitException{
 		printed.appendNL(String.format("%s:", MAIN_WRAPPER_LABEL));
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
@@ -58,7 +58,7 @@ public class IR_Program extends IR_Node {
 										   CODEGEN_Temporary zero,
 										   CODEGEN_Temporary strAddress,
 										   CODEGEN_Temporary strByte,
-										   CODEGEN_Temporary index) throws SEMANTIC_TooManyTempsException{
+										   CODEGEN_Temporary index) throws SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary argAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
 		printed.appendNL(String.format("addi %s, $fp, %d", 
@@ -79,7 +79,7 @@ public class IR_Program extends IR_Node {
 			 					 CODEGEN_Temporary zero,
 			 					 CODEGEN_Temporary strAddress,
 			 					 CODEGEN_Temporary strByte,
-			 					 CODEGEN_Temporary index) throws SEMANTIC_TooManyTempsException{
+			 					 CODEGEN_Temporary index) throws SEMANTIC_TempsPastLimitException{
 		
 		CODEGEN_Temporary strByteAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		String whileStartLabel = STRLEN_FUNCTION_LABEL + WHILE_START_LABEL_SUFFIX;
@@ -102,7 +102,7 @@ public class IR_Program extends IR_Node {
 		printed.appendNL(String.format("%s:", whileEndLabel));
 	}
 	
-	private void writeStrlen(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TooManyTempsException, IOException{
+	private void writeStrlen(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TempsPastLimitException, IOException{
 		CODEGEN_Temporary zero = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary strAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary strByte = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -121,7 +121,7 @@ public class IR_Program extends IR_Node {
 	private void writeMemcpyArgsLoading(CODEGEN_StringNLBuilder printed,
 										CODEGEN_Temporary dstAddress,
 										CODEGEN_Temporary srcAddress,
-										CODEGEN_Temporary bytesToCopyNum) throws SEMANTIC_TooManyTempsException{
+										CODEGEN_Temporary bytesToCopyNum) throws SEMANTIC_TempsPastLimitException{
 		
 		CODEGEN_Temporary argAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
@@ -152,7 +152,7 @@ public class IR_Program extends IR_Node {
 	private void writeMemcpyLoop(CODEGEN_StringNLBuilder printed,
 								 CODEGEN_Temporary dstAddress,
 								 CODEGEN_Temporary srcAddress,
-								 CODEGEN_Temporary bytesToCopyNum) throws SEMANTIC_TooManyTempsException{
+								 CODEGEN_Temporary bytesToCopyNum) throws SEMANTIC_TempsPastLimitException{
 		
 		CODEGEN_Temporary index = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary srcByteAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -194,7 +194,7 @@ public class IR_Program extends IR_Node {
 		printed.appendNL(String.format("%s:", whileEndLabel));
 	}
 	
-	private void writeMemcpy(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TooManyTempsException, IOException{
+	private void writeMemcpy(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TempsPastLimitException, IOException{
 		CODEGEN_Temporary dstAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary srcAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary bytesToCopyNum = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -209,7 +209,7 @@ public class IR_Program extends IR_Node {
 
 	private void writeStrcatArgsLoading(CODEGEN_StringNLBuilder printed, 
 										CODEGEN_Temporary str1Address, 
-										CODEGEN_Temporary str2Address) throws SEMANTIC_TooManyTempsException
+										CODEGEN_Temporary str2Address) throws SEMANTIC_TempsPastLimitException
 	{
 		CODEGEN_Temporary argAddress = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
@@ -241,7 +241,7 @@ public class IR_Program extends IR_Node {
 	
 	private CODEGEN_Temporary writeAllocationForConcat(CODEGEN_StringNLBuilder printed,
 										  CODEGEN_Temporary str1Length,
-										  CODEGEN_Temporary str2Length) throws SEMANTIC_TooManyTempsException, IOException{
+										  CODEGEN_Temporary str2Length) throws SEMANTIC_TempsPastLimitException, IOException{
 		
 		CODEGEN_Temporary concatLength = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
@@ -276,7 +276,7 @@ public class IR_Program extends IR_Node {
 	}
 	
 	private void writeNullTerminatorAddition(CODEGEN_StringNLBuilder printed,
-											 CODEGEN_Temporary nullTerminatorIndex) throws SEMANTIC_TooManyTempsException{
+											 CODEGEN_Temporary nullTerminatorIndex) throws SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary nullTerminator = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
 		printed.appendNL(String.format("li %s, 0", nullTerminator.getName()));
@@ -285,7 +285,7 @@ public class IR_Program extends IR_Node {
 									   nullTerminatorIndex.getName()));	
 	}
 	
-	private void writeStrcat(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TooManyTempsException, IOException{
+	private void writeStrcat(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TempsPastLimitException, IOException{
 		CODEGEN_Temporary str1Address = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary str2Address = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary str1Length = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -310,13 +310,13 @@ public class IR_Program extends IR_Node {
 		IR_Method.appendEpilog(printed);
 	}
 	
-	private void writeStaticUtilityFunctions(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TooManyTempsException, IOException{
+	private void writeStaticUtilityFunctions(CODEGEN_StringNLBuilder printed) throws SEMANTIC_TempsPastLimitException, IOException{
 		writeStrlen(printed);
 		writeMemcpy(printed);
 		writeStrcat(printed);
 	}
 	
-	public void generateCode() throws IOException, SEMANTIC_SemanticAnalysisException{
+	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
 		printed.appendNL(String.format("j %s", MAIN_WRAPPER_LABEL));
 		writeStaticUtilityFunctions(printed);

@@ -1,10 +1,10 @@
 package AST;
 
 import IR.IR_StatementCall;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_NullFieldException;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import UTILS.DebugPrint;
 
 public class AST_StatementCall extends AST_Statement{
@@ -19,7 +19,7 @@ public class AST_StatementCall extends AST_Statement{
 	}
 	
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		if (call.validate(className) == null){
 			DebugPrint.print("AST_STMT_CALL.validate: The call isn't valid.");
 			return null;
@@ -28,7 +28,7 @@ public class AST_StatementCall extends AST_Statement{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	private void bequeathClassAndFunctionNamesToChild() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	private void bequeathClassAndFunctionNamesToChild() throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		call.currentClassName = this.currentClassName;
@@ -36,7 +36,7 @@ public class AST_StatementCall extends AST_Statement{
 	}
 	
 	@Override
-	public IR_StatementCall createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_StatementCall createIR() throws SEMANTIC_SemanticErrorException{
 		bequeathClassAndFunctionNamesToChild();
 		return new IR_StatementCall(call.createIR());
 	}

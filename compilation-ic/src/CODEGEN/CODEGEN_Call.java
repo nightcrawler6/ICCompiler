@@ -14,7 +14,7 @@ import IR.IR_MethodList;
 import IR.IR_StatementStoreCommand;
 import IR.IR_StatementWhile;
 import IR.IR_Temporary;
-import SEMANTIC.SEMANTIC_TooManyTempsException;
+import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class CODEGEN_Call {
 	
@@ -44,7 +44,7 @@ public class CODEGEN_Call {
 		return null;
 	}
 	
-	public CODEGEN_Temporary codeGen_exp(IR_ExpBinop binopExp) throws SEMANTIC_TooManyTempsException{
+	public CODEGEN_Temporary codeGen_exp(IR_ExpBinop binopExp) throws SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary t1 = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		return t1;
 	}

@@ -8,7 +8,7 @@ import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 
 public class IR_Call extends IR_Node{
@@ -29,7 +29,7 @@ public class IR_Call extends IR_Node{
 		this.isPrintIntCall = isPrintIntCall;
 	}
 
-	public void generateCode() throws IOException, SEMANTIC_SemanticAnalysisException{
+	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		if(isPrintIntCall){
 			CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
 			CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();

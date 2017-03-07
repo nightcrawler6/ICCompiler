@@ -1,6 +1,6 @@
 package SEMANTIC;
 
-public class SEMANTIC_NullFieldException extends SEMANTIC_SemanticAnalysisException 
+public class SEMANTIC_NullFieldException extends SEMANTIC_SemanticErrorException 
 {
 	private static final long serialVersionUID = 1L;
 

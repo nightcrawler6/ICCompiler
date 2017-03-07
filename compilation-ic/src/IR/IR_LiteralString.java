@@ -6,7 +6,7 @@ import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_StringCollector;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_TooManyTempsException;
+import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class IR_LiteralString extends IR_Literal{
 	
@@ -17,7 +17,7 @@ public class IR_LiteralString extends IR_Literal{
 		this.label = new IR_AsmLabel(CODEGEN_StringCollector.addStringAndLabelMapping(this.quote));
 	}
 	
-	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TooManyTempsException{
+	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary register = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(String.format("la %s,%s%s", 
 				register.getName(), 

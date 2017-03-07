@@ -6,10 +6,10 @@ import IR.IR_ExpMemory;
 import IR.IR_LiteralConstant;
 import IR.IR_Temporary;
 import IR.IR_TemporaryType;
-import SEMANTIC.SEMANTIC_ClassNameNotInitializedException;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
+import SEMANTIC.SEMANTIC_NoInitForClassException;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public abstract class AST_Node{
 	public int SerialNumber;
@@ -23,22 +23,22 @@ public abstract class AST_Node{
 	public static final int FRAME_OFFSET_OF_THE_THIS_ARGUMENT = 8; 
 	public static final int FRAME_OFFSET_OF_FIRST_FORMAL = 12;
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		return null;
 	}
 	
-	public void assertClassNameInitialized() throws SEMANTIC_ClassNameNotInitializedException{
+	public void assertClassNameInitialized() throws SEMANTIC_NoInitForClassException{
 		if(this.currentClassName==null){
-			throw new SEMANTIC_ClassNameNotInitializedException();
+			throw new SEMANTIC_NoInitForClassException();
 		}
 	}
 	
-	public void assertClassAndFunctionNamesInitialized() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	public void assertClassAndFunctionNamesInitialized() throws SEMANTIC_NoInitForMethodException{
 		if(this.currentClassName==null){
-			throw new SEMANTIC_ClassOrFunctionNamesNotInitializedExecption();
+			throw new SEMANTIC_NoInitForMethodException();
 		}
 		if(currentFunctionName==null){
-			throw new SEMANTIC_ClassOrFunctionNamesNotInitializedExecption();
+			throw new SEMANTIC_NoInitForMethodException();
 		}
 	}
 	

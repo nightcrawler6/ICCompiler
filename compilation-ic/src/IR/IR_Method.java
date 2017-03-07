@@ -8,8 +8,8 @@ import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
 import CODEGEN.CODEGEN_StringNLBuilder;
 import CODEGEN.CODEGEN_TemporaryFactory;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
-import SEMANTIC.SEMANTIC_TooManyTempsException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
+import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class IR_Method extends IR_Node 
 {
@@ -55,7 +55,7 @@ public class IR_Method extends IR_Node
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
-	public void generatePrintIntCode() throws IOException, SEMANTIC_TooManyTempsException{
+	public void generatePrintIntCode() throws IOException, SEMANTIC_TempsPastLimitException{
 		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
 
 		CODEGEN_Temporary givenInteger = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -70,7 +70,7 @@ public class IR_Method extends IR_Node
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
-	public void generateCode() throws IOException, SEMANTIC_SemanticAnalysisException{
+	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		if(isPrintIntFunc){
 			this.label = new IR_AsmLabel(PRINTINT_FUNC_LABEL);
 		}

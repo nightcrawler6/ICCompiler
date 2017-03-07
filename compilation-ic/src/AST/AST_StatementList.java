@@ -2,11 +2,11 @@ package AST;
 
 import IR.IR_Statement;
 import IR.IR_StatementList;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
-import SEMANTIC.SEMANTIC_ExpectedReturnTypeIsNotInitializedException;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
+import SEMANTIC.SEMANTIC_NoInitForReturnTypeException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
-import SEMANTIC.SEMANTIC_TailWithNoHeadException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
+import SEMANTIC.SEMANTIC_NoHeadFoundException;
 import UTILS.DebugPrint;
 
 public class AST_StatementList extends AST_Statement{
@@ -39,12 +39,12 @@ public class AST_StatementList extends AST_Statement{
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	private SEMANTIC_ICTypeInfo validateListWithNoHead() throws SEMANTIC_TailWithNoHeadException{
+	private SEMANTIC_ICTypeInfo validateListWithNoHead() throws SEMANTIC_NoHeadFoundException{
 		if (tail == null){
 			return new SEMANTIC_ICTypeInfo();
 		}
 		else{
-			throw new SEMANTIC_TailWithNoHeadException();
+			throw new SEMANTIC_NoHeadFoundException();
 		}
 	}
 	
@@ -58,13 +58,13 @@ public class AST_StatementList extends AST_Statement{
 	}
 	
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		if (head == null){
 			return validateListWithNoHead();
 		}
 		
 		if (this.expectedReturnType == null){
-			throw new SEMANTIC_ExpectedReturnTypeIsNotInitializedException();
+			throw new SEMANTIC_NoInitForReturnTypeException();
 		}
 		
 		head.expectedReturnType = this.expectedReturnType;
@@ -85,7 +85,7 @@ public class AST_StatementList extends AST_Statement{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	private void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	private void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		if (head != null){
@@ -99,7 +99,7 @@ public class AST_StatementList extends AST_Statement{
 		}
 	}
 	
-	private IR_StatementList createTailIR() throws SEMANTIC_SemanticAnalysisException{
+	private IR_StatementList createTailIR() throws SEMANTIC_SemanticErrorException{
 		if (tail != null){
 			return tail.createIR();
 		}
@@ -109,7 +109,7 @@ public class AST_StatementList extends AST_Statement{
 	}
 	
 	@Override
-	public IR_StatementList createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_StatementList createIR() throws SEMANTIC_SemanticErrorException{
 		bequeathClassAndFunctionNamesToChildren();
 		
 		if (head == null){

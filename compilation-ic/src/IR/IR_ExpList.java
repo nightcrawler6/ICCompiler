@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import CODEGEN.CODEGEN_Temporary;
-import SEMANTIC.SEMANTIC_IRExpListGenerateCodeException;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_CodeGenExpException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_ExpList extends IR_EXP{
 	public IR_EXP head;
@@ -17,11 +17,11 @@ public class IR_ExpList extends IR_EXP{
 		this.tail=tail;
 	}
 	
-	public CODEGEN_Temporary generateCode() throws SEMANTIC_IRExpListGenerateCodeException{
-		throw new SEMANTIC_IRExpListGenerateCodeException();
+	public CODEGEN_Temporary generateCode() throws SEMANTIC_CodeGenExpException{
+		throw new SEMANTIC_CodeGenExpException();
 	}
 	
-	public List<CODEGEN_Temporary> generateCodeList() throws IOException, SEMANTIC_IRExpListGenerateCodeException, SEMANTIC_SemanticAnalysisException{
+	public List<CODEGEN_Temporary> generateCodeList() throws IOException, SEMANTIC_CodeGenExpException, SEMANTIC_SemanticErrorException{
 		List<CODEGEN_Temporary> argsList = new ArrayList<CODEGEN_Temporary>();
 		argsList.add(head.generateCode());
 		IR_ExpList iterator = tail;

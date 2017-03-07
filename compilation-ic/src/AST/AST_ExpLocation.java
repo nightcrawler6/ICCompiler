@@ -2,7 +2,7 @@ package AST;
 
 import IR.IR_ExpMemory;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_ExpLocation extends AST_Exp{
 	public AST_Location location;
@@ -11,12 +11,12 @@ public class AST_ExpLocation extends AST_Exp{
 		this.location = location;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		return location.validate(className);
 	}
 	
 	@Override
-	public IR_ExpMemory createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ExpMemory createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		
 		this.location.currentClassName = this.currentClassName;

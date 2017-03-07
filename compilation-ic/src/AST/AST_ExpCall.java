@@ -2,7 +2,7 @@ package AST;
 
 import IR.IR_ExpCall;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_ExpCall extends AST_Exp{ 
 	public AST_Call call;
@@ -11,11 +11,11 @@ public class AST_ExpCall extends AST_Exp{
 		this.call = call;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		return call.validate(className);
 	}
 	
-	public IR_ExpCall createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ExpCall createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		
 		this.call.currentClassName = this.currentClassName;

@@ -2,7 +2,7 @@ package IR;
 
 import java.io.IOException;
 
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_StatementList extends IR_Statement 
 {
@@ -15,7 +15,7 @@ public class IR_StatementList extends IR_Statement
 	}
 	
 	@Override
-	public void generateCode() throws IOException, SEMANTIC_SemanticAnalysisException
+	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException
 	{
 		if (head != null){
 			head.generateCode();

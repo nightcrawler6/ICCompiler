@@ -1,7 +1,7 @@
 package AST;
 
 import IR.IR_ClassDeclList;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_ClassDeclList extends AST_Node{
 	
@@ -27,7 +27,7 @@ public class AST_ClassDeclList extends AST_Node{
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	public IR_ClassDeclList createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ClassDeclList createIR() throws SEMANTIC_SemanticErrorException{
 		if(tail!=null){
 			return new IR_ClassDeclList(head.createIR(),tail.createIR());
 		}

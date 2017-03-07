@@ -1,13 +1,13 @@
 package AST;
 
 
-import SEMANTIC.SEMANTIC_ClassIsNotInSymbolTableException;
-import SEMANTIC.SEMANTIC_ClassNameNotInitializedException;
+import SEMANTIC.SEMANTIC_NoSuchClassInTableException;
+import SEMANTIC.SEMANTIC_NoInitForClassException;
 import SEMANTIC.SEMANTIC_ClassSymbolInfo;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import SEMANTIC.SEMANTIC_TypeInAstIdListIsNotInitialized;
+import SEMANTIC.SEMANTIC_NoInitForIDListException;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
 
 public class AST_IDList extends AST_Node{
@@ -32,9 +32,9 @@ public class AST_IDList extends AST_Node{
 		}
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		if(type==null){
-			throw new SEMANTIC_TypeInAstIdListIsNotInitialized();
+			throw new SEMANTIC_NoInitForIDListException();
 		}
 		
 		SEMANTIC_VariableSymbolInfo fieldInfo = new SEMANTIC_VariableSymbolInfo(head, type);
@@ -57,7 +57,7 @@ public class AST_IDList extends AST_Node{
 		return ((this.tail==null)&&(this.head==null));
 	}
 	
-	public void createIR() throws SEMANTIC_ClassIsNotInSymbolTableException, SEMANTIC_ClassNameNotInitializedException{
+	public void createIR() throws SEMANTIC_NoSuchClassInTableException, SEMANTIC_NoInitForClassException{
 		assertClassNameInitialized();
 		SEMANTIC_ClassSymbolInfo currentClassSymbolInfo=SEMANTIC_SymbolTable.getClassSymbolInfo(currentClassName);
 		int fieldOffset=currentClassSymbolInfo.size;

@@ -2,7 +2,7 @@ package AST;
 
 import IR.IR_EXP;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class AST_ExpLPRP extends AST_Exp{ 
 	public AST_Exp e;
@@ -11,12 +11,12 @@ public class AST_ExpLPRP extends AST_Exp{
 		this.e = e;
 	}
 	
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		return e.validate(className);
 	}
 
 	@Override
-	public IR_EXP createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_EXP createIR() throws SEMANTIC_SemanticErrorException{
 		assertClassAndFunctionNamesInitialized();
 		this.e.currentFunctionName=this.currentFunctionName;
 		this.e.currentClassName=this.currentClassName;

@@ -2,11 +2,11 @@ package AST;
 
 import IR.IR_Node;
 import IR.IR_StatementStoreCommand;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
 import SEMANTIC.SEMANTIC_FunctionSymbolInfo;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_NullFieldException;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
 import UTILS.DebugPrint;
@@ -30,7 +30,7 @@ public class AST_StatementVariableDecl extends AST_Statement{
 	}
 	
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo varICTypeInfo = varType.validate(className);
 		if (varICTypeInfo == null){
 			String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The type of the variable '%s' isn't valid.", 
@@ -69,7 +69,7 @@ public class AST_StatementVariableDecl extends AST_Statement{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	private void bequeathClassAndFunctionNamesToAssignment(AST_StatementAssign assignment) throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	private void bequeathClassAndFunctionNamesToAssignment(AST_StatementAssign assignment) throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		assignment.currentClassName = this.currentClassName;
@@ -89,7 +89,7 @@ public class AST_StatementVariableDecl extends AST_Statement{
 	}
 	
 	@Override
-	public IR_StatementStoreCommand createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_StatementStoreCommand createIR() throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_FunctionSymbolInfo functionInfo = getFunctionSymbolInfo();
 		int variableOffset = AST_Node.FRAME_OFFSET_OF_FIRST_LOCAL - functionInfo.frameSize;
 		SEMANTIC_VariableSymbolInfo variableInfo = new SEMANTIC_VariableSymbolInfo(varName, varICTypeInfo, variableOffset, false);

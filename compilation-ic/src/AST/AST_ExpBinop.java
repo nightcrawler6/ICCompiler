@@ -4,7 +4,7 @@ import IR.IR_Binop;
 import IR.IR_EXP;
 import IR.IR_ExpBinop;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import UTILS.DebugPrint;
 
@@ -21,7 +21,7 @@ public class AST_ExpBinop extends AST_Exp{
 	}
 	
 
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo leftInfo  = left.validate(className);
 		SEMANTIC_ICTypeInfo rightInfo = right.validate(className);
 		
@@ -103,7 +103,7 @@ public class AST_ExpBinop extends AST_Exp{
 		return null;
 	}
 	
-	public IR_ExpBinop createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_ExpBinop createIR() throws SEMANTIC_SemanticErrorException{
 		IR_Binop currentOP=getBinOperation();
 		assertClassAndFunctionNamesInitialized();
 		

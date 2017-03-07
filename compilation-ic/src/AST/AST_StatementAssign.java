@@ -1,10 +1,10 @@
 package AST;
 
 import IR.IR_StatementStoreCommand;
-import SEMANTIC.SEMANTIC_ClassOrFunctionNamesNotInitializedExecption;
+import SEMANTIC.SEMANTIC_NoInitForMethodException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_NullFieldException;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import UTILS.DebugPrint;
 
@@ -25,7 +25,7 @@ public class AST_StatementAssign extends AST_Statement{
 	}
 	
 	@Override
-	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticAnalysisException{
+	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo locationType = location.validate(className);
 		if (locationType == null){
 			DebugPrint.print("AST_STMT_ASSIGN.validate: The location isn't valid.");
@@ -48,7 +48,7 @@ public class AST_StatementAssign extends AST_Statement{
 		return new SEMANTIC_ICTypeInfo();
 	}
 	
-	private void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_ClassOrFunctionNamesNotInitializedExecption{
+	private void bequeathClassAndFunctionNamesToChildren() throws SEMANTIC_NoInitForMethodException{
 		assertClassAndFunctionNamesInitialized();
 		
 		location.currentClassName = this.currentClassName;
@@ -59,7 +59,7 @@ public class AST_StatementAssign extends AST_Statement{
 	}
 	
 	@Override
-	public IR_StatementStoreCommand createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_StatementStoreCommand createIR() throws SEMANTIC_SemanticErrorException{
 		bequeathClassAndFunctionNamesToChildren();
 		return new IR_StatementStoreCommand(location.createIR(), expression.createIR());
 	}

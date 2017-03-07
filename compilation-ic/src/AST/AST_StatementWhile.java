@@ -4,7 +4,7 @@ import IR.IR_EXP;
 import IR.IR_Statement;
 import IR.IR_StatementWhile;
 import SEMANTIC.SEMANTIC_FunctionSymbolInfo;
-import SEMANTIC.SEMANTIC_SemanticAnalysisException;
+import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 
 public class AST_StatementWhile extends AST_StatementCondition{
@@ -14,7 +14,7 @@ public class AST_StatementWhile extends AST_StatementCondition{
 	}
 
 	@Override
-	public IR_StatementWhile createIR() throws SEMANTIC_SemanticAnalysisException{
+	public IR_StatementWhile createIR() throws SEMANTIC_SemanticErrorException{
 		bequeathClassAndFunctionNamesToChildren();
 		
 		IR_EXP condIR = cond.createIR();
