@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Created-By: 1.8.0_65 (Oracle Corporation)
+Class-Path: ./src/java-cup-11b-runtime.jar
+  ./bin/*.class
+  ./bin/UTILS/*.class
+  ./bin/SEMANTIC/*.class
+  ./bin/IR/*.class
+  ./bin/CODEGEN/*.class
+  ./bin/AST/*.class
+  ./bin/
+Main-Class: Main
+
