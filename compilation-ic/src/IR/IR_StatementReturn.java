@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_StatementReturn extends IR_Statement{
@@ -18,7 +18,7 @@ public class IR_StatementReturn extends IR_Statement{
 	
 	@Override
 	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException{
-		CODEGEN_StringNLBuilder builder = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher builder = new CODEGEN_StringAttacher();
 		if (returnedExpression != null){
 			CODEGEN_Temporary returnValue = returnedExpression.generateCode();
 			builder.appendNL(String.format("mov $v0,%s",returnValue.getName()));

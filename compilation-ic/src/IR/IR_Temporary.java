@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
@@ -16,7 +16,7 @@ public class IR_Temporary extends IR_EXP{
 	
 	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary newTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		
 		if(tempType==IR_TemporaryType.fp){
 			printed.appendNL(String.format("mov %s,$fp",newTemp.getName()));			

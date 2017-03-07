@@ -5,7 +5,7 @@ import java.io.IOException;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_ClassSymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
@@ -23,7 +23,7 @@ public class IR_ExpNewClass extends IR_EXP{
 			return;
 		}
 		
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		CODEGEN_Temporary temp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
@@ -37,7 +37,7 @@ public class IR_ExpNewClass extends IR_EXP{
 	
 	private void generateCodeForStoringVFTableAddress(SEMANTIC_ClassSymbolInfo classInfo, 
 													  CODEGEN_Temporary addressOnHeap, 
-													  CODEGEN_StringNLBuilder printed) throws SEMANTIC_TempsPastLimitException{
+													  CODEGEN_StringAttacher printed) throws SEMANTIC_TempsPastLimitException{
 		CODEGEN_Temporary newTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
 		if (classInfo.virtualFunctionsOrder.size() > 0){
@@ -52,7 +52,7 @@ public class IR_ExpNewClass extends IR_EXP{
 	
 	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_TempsPastLimitException{
 		SEMANTIC_ClassSymbolInfo classInfo = SEMANTIC_SymbolTable.getClassSymbolInfo(newExpClassName);
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		CODEGEN_Temporary addressOnHeap = CODEGEN_Utils.codeGen_malloc(printed,classInfo.size);
 		generateCodeForStoringVFTableAddress(classInfo, addressOnHeap, printed);
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());

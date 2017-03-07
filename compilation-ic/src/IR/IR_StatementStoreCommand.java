@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 
 public class IR_StatementStoreCommand extends IR_Statement{
@@ -22,7 +22,7 @@ public class IR_StatementStoreCommand extends IR_Statement{
 		
 		CODEGEN_Temporary dstAddressTemp = dstAddress.generateCode();
 		
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		printed.appendNL(String.format("sw %s,0(%s)", 
 									   srcValueTemp.getName(),
 									   dstAddressTemp.getName()));

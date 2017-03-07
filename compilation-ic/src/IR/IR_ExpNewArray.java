@@ -5,7 +5,7 @@ import java.io.IOException;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
@@ -18,7 +18,7 @@ public class IR_ExpNewArray extends IR_EXP{
 		this.size=size;
 	}
 	
-	public void generateNullForArrayElements(CODEGEN_Temporary addressOnHeap,CODEGEN_Temporary arraySize,CODEGEN_StringNLBuilder printed) throws IOException, SEMANTIC_TempsPastLimitException{			
+	public void generateNullForArrayElements(CODEGEN_Temporary addressOnHeap,CODEGEN_Temporary arraySize,CODEGEN_StringAttacher printed) throws IOException, SEMANTIC_TempsPastLimitException{			
 		CODEGEN_Temporary currIndex = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary tempIterator = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
@@ -43,7 +43,7 @@ public class IR_ExpNewArray extends IR_EXP{
 	public CODEGEN_Temporary generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		CODEGEN_Temporary generatedNumOfElements = this.size.generateCode();
 		CODEGEN_Temporary generatedNumOfElementsPlusOne = CODEGEN_TemporaryFactory.getAndAddNewTemp();
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		CODEGEN_Temporary fourTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		printed.appendNL(String.format("li %s,4",fourTemp.getName()));
 		printed.appendNL(String.format("addi %s,%s,1", generatedNumOfElementsPlusOne.getName(), generatedNumOfElements.getName()));

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 
@@ -23,7 +23,7 @@ public class IR_ExpLocationField extends IR_EXP{
 		CODEGEN_Temporary objTemp = obj.generateCode();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 		printed.appendNL(String.format("beq %s,%s,%s", 
 									   objTemp.getName(), 

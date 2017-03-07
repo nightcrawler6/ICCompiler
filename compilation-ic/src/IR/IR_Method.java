@@ -6,7 +6,7 @@ import AST.AST_Node;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_TempsPastLimitException;
@@ -29,7 +29,7 @@ public class IR_Method extends IR_Node
 		this.isPrintIntFunc = isPrintIntFunc;
 	}
 	
-	public static void appendProlog(CODEGEN_StringNLBuilder printed, int funcFrameSize) throws IOException{
+	public static void appendProlog(CODEGEN_StringAttacher printed, int funcFrameSize) throws IOException{
 		CODEGEN_Utils.codeGen_Push(printed, "$ra");
 		CODEGEN_Utils.codeGen_Push(printed, "$fp");
 		printed.appendNL("mov $fp, $sp");
@@ -37,12 +37,12 @@ public class IR_Method extends IR_Node
 	}
 	
 	public void printProlog() throws IOException{
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		appendProlog(printed, this.frameSize);
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
-	public static void appendEpilog(CODEGEN_StringNLBuilder printed) throws IOException{
+	public static void appendEpilog(CODEGEN_StringAttacher printed) throws IOException{
 		printed.appendNL("mov $sp, $fp");
 		CODEGEN_Utils.codeGen_Pop(printed, "$fp");
 		CODEGEN_Utils.codeGen_Pop(printed, "$ra");
@@ -50,13 +50,13 @@ public class IR_Method extends IR_Node
 	}
 	
 	public void printEpilog() throws IOException{
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		appendEpilog(printed);
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());
 	}
 	
 	public void generatePrintIntCode() throws IOException, SEMANTIC_TempsPastLimitException{
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 
 		CODEGEN_Temporary givenInteger = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary arg1Offset = CODEGEN_TemporaryFactory.getAndAddNewTemp();

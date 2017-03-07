@@ -6,7 +6,7 @@ import java.util.List;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
@@ -31,7 +31,7 @@ public class IR_Call extends IR_Node{
 
 	public void generateCode() throws IOException, SEMANTIC_SemanticErrorException{
 		if(isPrintIntCall){
-			CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+			CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 			CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 			printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 			List<CODEGEN_Temporary> ts = args.generateCodeList();
@@ -49,7 +49,7 @@ public class IR_Call extends IR_Node{
 		CODEGEN_Temporary callerAddressTemp = (CODEGEN_Temporary) callerAddress.generateCode();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 		printed.appendNL(String.format("beq %s,%s,%s", 
 									   callerAddressTemp.getName(), 
@@ -58,7 +58,7 @@ public class IR_Call extends IR_Node{
 		CODEGEN_AssemblyFilePrinter.getInstance(null).write(printed.toString());
 		
 		CODEGEN_Temporary functionAddressTemp = (CODEGEN_Temporary) calledFunctionAddress.generateCode();
-		printed = new CODEGEN_StringNLBuilder();
+		printed = new CODEGEN_StringAttacher();
 
 		int spOffset = SEMANTIC_SymbolTable.ADDRESS_SIZE;
 		

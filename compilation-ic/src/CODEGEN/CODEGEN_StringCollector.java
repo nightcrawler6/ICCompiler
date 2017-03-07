@@ -24,7 +24,7 @@ public class CODEGEN_StringCollector
 		if(labelAndStringMappings.size() == 0){
 			return;
 		}
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		printed.appendNL(".data");
 		for(int i=0;i<labelAndStringMappings.size();i++){
 			SEMANTIC_Tuple<String,String> currPair = labelAndStringMappings.get(i);

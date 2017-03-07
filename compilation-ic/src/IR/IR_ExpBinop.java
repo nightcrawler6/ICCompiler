@@ -5,7 +5,7 @@ import java.io.IOException;
 import CODEGEN.CODEGEN_AssemblyFilePrinter;
 import CODEGEN.CODEGEN_Temporary;
 import CODEGEN.CODEGEN_Utils;
-import CODEGEN.CODEGEN_StringNLBuilder;
+import CODEGEN.CODEGEN_StringAttacher;
 import CODEGEN.CODEGEN_TemporaryFactory;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
@@ -91,7 +91,7 @@ public class IR_ExpBinop extends IR_EXP {
 	private void generateCodeForStrConcat(CODEGEN_Temporary str1Temp, 
 										  CODEGEN_Temporary str2Temp, 
 										  CODEGEN_Temporary resultTemp,
-										  CODEGEN_StringNLBuilder printed) throws IOException{
+										  CODEGEN_StringAttacher printed) throws IOException{
 		CODEGEN_Utils.codeGen_Push(printed, str2Temp.getName());
 		CODEGEN_Utils.codeGen_Push(printed, str1Temp.getName());
 		
@@ -106,7 +106,7 @@ public class IR_ExpBinop extends IR_EXP {
 		CODEGEN_Temporary t1 = left.generateCode();
 		CODEGEN_Temporary t2 = right.generateCode();
 		
-		CODEGEN_StringNLBuilder printed = new CODEGEN_StringNLBuilder();
+		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		
 		if(isMathematicOperation()){
 			if (isStrConcat){

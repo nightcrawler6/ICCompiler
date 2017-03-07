@@ -1,6 +1,6 @@
 package CODEGEN;
 
-public class CODEGEN_StringNLBuilder 
+public class CODEGEN_StringAttacher 
 {
 	public StringBuilder builder = new StringBuilder();
 	
