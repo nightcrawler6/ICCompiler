@@ -8,7 +8,6 @@ import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import UTILS.DebugPrint;
 
 public class AST_Method extends AST_FieldMethod{
 	
@@ -60,20 +59,17 @@ public class AST_Method extends AST_FieldMethod{
 		}
 
 		if(this.body.validate(className)==null){
-			DebugPrint.print("AST_METHOD.validate: The body isn't valid (returns an incompatible type, or invalid in itself)");
 			return null;
 		}	
 		if ((!this.body.expectedReturnType.ICType.equals(SEMANTIC_ICTypeInfo.IC_TYPE_VOID)) &&
 			(!this.body.doesAlwaysReturnValue)){
-			DebugPrint.print("AST_METHOD.validate: The body doesn't always return a value though it should");
-			return null;
+				return null;
 		}
 		
 		
 		SEMANTIC_SymbolTable.closeCurrentScope();
 		if (currentFunctionName.equals(SEMANTIC_SymbolTable.MAIN_FUNC_SYMBOL_NAME)){
 			if (!methodSymbolInfo.validateMainIsValid()){
-				DebugPrint.print("AST_METHOD.validate: Invalid main.");
 				return null;
 			}
 			this.isMainFunc = true;

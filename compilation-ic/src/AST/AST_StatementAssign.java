@@ -6,7 +6,6 @@ import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_NullFieldException;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import UTILS.DebugPrint;
 
 public class AST_StatementAssign extends AST_Statement{
 	public AST_Location location;
@@ -28,20 +27,15 @@ public class AST_StatementAssign extends AST_Statement{
 	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo locationType = location.validate(className);
 		if (locationType == null){
-			DebugPrint.print("AST_STMT_ASSIGN.validate: The location isn't valid.");
 			return null;
 		}
 		
 		SEMANTIC_ICTypeInfo expressionType = expression.validate(className);
 		if (expressionType == null){
-			DebugPrint.print("AST_STMT_ASSIGN.validate: The expression isn't valid.");
 			return null;
 		}
 		
 		if (!SEMANTIC_SymbolTable.validatePredeccessor(locationType, expressionType)){
-			String debugMessage = String.format("AST_STMT_ASSIGN.validate: The assignment can't be done. location : %s, expression : %s", 
-												locationType, expressionType);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		

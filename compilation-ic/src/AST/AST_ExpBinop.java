@@ -6,7 +6,6 @@ import IR.IR_ExpBinop;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import UTILS.DebugPrint;
 
 public class AST_ExpBinop extends AST_Exp{
 	public AST_Binop op;
@@ -39,8 +38,6 @@ public class AST_ExpBinop extends AST_Exp{
 				return new SEMANTIC_ICTypeInfo(SEMANTIC_ICTypeInfo.IC_TYPE_STRING,0);
 			}
 			
-			String debugMessage = String.format("AST_EXP_BINOP.validate: %s + %s is undefined.", leftInfo, rightInfo);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		else if(op instanceof AST_BinopMinus || op instanceof AST_BinopTimes || op instanceof AST_BinopDivide){

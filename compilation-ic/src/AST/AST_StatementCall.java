@@ -5,7 +5,6 @@ import SEMANTIC.SEMANTIC_NoInitForMethodException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_NullFieldException;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
-import UTILS.DebugPrint;
 
 public class AST_StatementCall extends AST_Statement{
 	public AST_Call call;
@@ -21,7 +20,6 @@ public class AST_StatementCall extends AST_Statement{
 	@Override
 	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		if (call.validate(className) == null){
-			DebugPrint.print("AST_STMT_CALL.validate: The call isn't valid.");
 			return null;
 		}
 		

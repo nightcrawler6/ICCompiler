@@ -2,7 +2,7 @@ rm -R ./bin/* COMPILER Compiler.jar
 
 truncate -s 0 output.txt
 
-javac -cp .:src/java-cup-11b-runtime.jar:src/java-cup-11b.jar -d ./bin src/UTILS/*.java src/SEMANTIC/*.java src/IR/*.java src/CODEGEN/*.java src/AST/*.java src/*.java
+javac -cp .:src/java-cup-11b-runtime.jar:src/java-cup-11b.jar -d ./bin src/SEMANTIC/*.java src/IR/*.java src/CODEGEN/*.java src/AST/*.java src/*.java
 
 jar cvfm Compiler.jar ./src/MANIFEST.MF ./bin/ .
 

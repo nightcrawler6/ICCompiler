@@ -4,7 +4,6 @@ import IR.IR_Program;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import UTILS.DebugPrint;
 
 public class AST_Program extends AST_Node{
 	public AST_ClassDeclList l;
@@ -24,7 +23,6 @@ public class AST_Program extends AST_Node{
 		}
 
 		if(!SEMANTIC_SymbolTable.doesOneMainExistInProgram()){
-			DebugPrint.print("AST_PROGRAM.validate: The program doesn't contain exactly one valid main method");
 			return null;
 		}
 		SEMANTIC_SymbolTable.closeCurrentScope();

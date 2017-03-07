@@ -17,7 +17,6 @@ import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import UTILS.DebugPrint;
 
 public class AST_Call extends AST_Node{
 	
@@ -36,24 +35,15 @@ public class AST_Call extends AST_Node{
 		
 		SEMANTIC_ICTypeInfo callerTypeInfo = caller.validate(className);
 		if (callerTypeInfo == null){
-			DebugPrint.print("AST_CALL.getObjectSymbolInfo: The calling expression isn't a valid expression.");
 			return null;
 		}
 		if (!callerTypeInfo.isICClass()){
-			String debugMessage = 
-					String.format("AST_CALL.getObjectSymbolInfo: The calling expression isn't an object, exp : %s", 
-								  callerTypeInfo); 
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
 		callerClassName = callerTypeInfo.ICType;
 		SEMANTIC_SymbolInfo symbolInfo = SEMANTIC_SymbolTable.searchSymbolInfoInClassAndUp(callerClassName, calledFunctionName);
 		if (symbolInfo == null){
-			String debugMessage = 
-					String.format("AST_CALL.getObjectSymbolInfo: The class '%s' doesn't contain the symbol '%s'.", 
-								  callerTypeInfo.ICType, calledFunctionName);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
@@ -67,7 +57,6 @@ public class AST_Call extends AST_Node{
 			functionSymbolInfo = 
 					SEMANTIC_SymbolTable.searchSymbolInfoLocallyOrInCurrentClassAndUp(className, calledFunctionName);
 			if (functionSymbolInfo == null){
-				DebugPrint.print("AST_CALL.getFunctionSymbolInfo: The symbol '" + calledFunctionName + "' doesn't exist locally or in the class '" + className + "'.");
 				return null;
 			}
 		}
@@ -79,7 +68,6 @@ public class AST_Call extends AST_Node{
 		}
 		
 		if (!(functionSymbolInfo instanceof SEMANTIC_FunctionSymbolInfo)){
-			DebugPrint.print("AST_CALL.getFunctionSymbolInfo: '" + calledFunctionName + "' is not a function.");
 			return null;
 		}
 		
@@ -91,14 +79,10 @@ public class AST_Call extends AST_Node{
 
 		SEMANTIC_ICTypeInfo actualArgumentType = actualArgument.validate(className);
 		if (actualArgumentType == null){
-			DebugPrint.print("AST_CALL.validateSingleActualArgument: The expression is invalid.");
 			return false;
 		}
 		
 		if (!SEMANTIC_SymbolTable.validatePredeccessor(formalArgumentType, actualArgumentType)){
-			String debugMessage = String.format("AST_CALL.validateSingleActualArgument: Formal/actual type mismatch, formal : %s, actual : %s", 
-												formalArgumentType, actualArgumentType);
-			DebugPrint.print(debugMessage);
 			return false;
 		}
 		
@@ -113,13 +97,9 @@ public class AST_Call extends AST_Node{
 				return true;
 			}
 			
-			DebugPrint.print("AST_CALL.validateActualArguments: Too many actual arguments.");
 			return false;
 		}
 		if ((actualArguments == null) || (actualArguments.head == null)){
-			String debugMessage = String.format("AST_CALL.validateActualArguments: Missing %d actual argument(s).",
-												formalArgumentTypes.size());
-			DebugPrint.print(debugMessage);
 			return false;
 		}
 		

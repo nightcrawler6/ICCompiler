@@ -6,7 +6,6 @@ import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolInfo;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
-import UTILS.DebugPrint;
 
 public class AST_LocationField extends AST_Location{
 	public String varClass;
@@ -25,9 +24,6 @@ public class AST_LocationField extends AST_Location{
 		}
 		
 		if(!varInfo.isICClass()){
-			String debugMessage = String.format("AST_LOCATION_FIELD.validate: The expression is not an object, so it doesn't have the field '%s'. exp : %s",
-					fieldName, varInfo);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
@@ -35,9 +31,6 @@ public class AST_LocationField extends AST_Location{
 		SEMANTIC_SymbolInfo fieldFound = SEMANTIC_SymbolTable.searchSymbolInfoInClassAndUp(varClass,fieldName);
 
 		if(fieldFound==null  ||  (!(fieldFound instanceof SEMANTIC_VariableSymbolInfo))){
-			String debugMessage = String.format("AST_LOCATION_FIELD.validate: The class '%s' doesn't have a field '%s'.",
-					varInfo, fieldName);
-			DebugPrint.print(debugMessage);
 			return null;			
 		}
 

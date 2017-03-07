@@ -3,8 +3,6 @@ package SEMANTIC;
 import java.util.ArrayList;
 import java.util.List;
 
-import UTILS.DebugPrint;
-
 public class SEMANTIC_FunctionSymbolInfo extends SEMANTIC_SymbolInfo{
 
 	public SEMANTIC_ICTypeInfo returnType;
@@ -67,21 +65,15 @@ public class SEMANTIC_FunctionSymbolInfo extends SEMANTIC_SymbolInfo{
 		}
 		
 		if((this.argumentsTypes == null) || (this.argumentsTypes.size()!=1)){
-			DebugPrint.print("FunctionSymbolInfo.validateMainIsValid: The main method has a wrong number of arguments.");
 			return false;
 		}
 		if(!(this.argumentsTypes.get(0).ICType.equals(SEMANTIC_ICTypeInfo.IC_TYPE_STRING))){
-			DebugPrint.print("FunctionSymbolInfo.validateMainIsValid: The main method's argument has an invalid argument");
 			return false;
 		}
 		if(this.argumentsTypes.get(0).pointerDepth!=1){
-			DebugPrint.print("FunctionSymbolInfo.validateMainIsValid: The main method's argument has an invalid argument");
 			return false;
 		}
 		if(!this.returnType.ICType.equals(SEMANTIC_ICTypeInfo.IC_TYPE_VOID)){
-			String debugMessage = String.format("FunctionSymbolInfo.validateMainIsValid: The main method's argument has an invalid return type: %s instead of void.", 
-					returnType);
-			DebugPrint.print(debugMessage);
 			return false;
 		}
 		return true;

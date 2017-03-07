@@ -7,7 +7,6 @@ import SEMANTIC.SEMANTIC_NoInitForReturnTypeException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_NoHeadFoundException;
-import UTILS.DebugPrint;
 
 public class AST_StatementList extends AST_Statement{
 
@@ -69,14 +68,12 @@ public class AST_StatementList extends AST_Statement{
 		
 		head.expectedReturnType = this.expectedReturnType;
 		if (head.validate(className) == null){
-			DebugPrint.print("AST_STMT_LIST.validate: The head isn't valid.");
 			return null;
 		}
 		
 		if (tail != null){
 			tail.expectedReturnType = this.expectedReturnType;
 			if (tail.validate(className) == null){
-				DebugPrint.print("AST_STMT_LIST.validate: The tail isn't valid.");
 				return null;
 			}
 		}

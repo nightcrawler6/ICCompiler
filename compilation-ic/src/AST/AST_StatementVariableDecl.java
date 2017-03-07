@@ -9,7 +9,6 @@ import SEMANTIC.SEMANTIC_NullFieldException;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
-import UTILS.DebugPrint;
 
 public class AST_StatementVariableDecl extends AST_Statement{
 	public AST_Type varType;
@@ -33,32 +32,20 @@ public class AST_StatementVariableDecl extends AST_Statement{
 	public SEMANTIC_ICTypeInfo validate(String className) throws SEMANTIC_SemanticErrorException{
 		SEMANTIC_ICTypeInfo varICTypeInfo = varType.validate(className);
 		if (varICTypeInfo == null){
-			String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The type of the variable '%s' isn't valid.", 
-					varName);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
 		if (SEMANTIC_SymbolTable.doesSymbolExistInCurrentScope(varName)){
-			String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The variable '%s' is redefined.", 
-					varName);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		
 		if (exp != null){
 			SEMANTIC_ICTypeInfo expressionICTypeInfo = exp.validate(className);
 			if (expressionICTypeInfo == null){
-				String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The initial expression of the variable '%s' isn't valid.", 
-						varName);
-				DebugPrint.print(debugMessage);
 				return null;
 			}
 			
 			if (!SEMANTIC_SymbolTable.validatePredeccessor(varICTypeInfo, expressionICTypeInfo)){
-				String debugMessage = String.format("AST_STMT_VAR_DECL.validate: The assignment can't be done. var : %s, expression : %s", 
-						varICTypeInfo, expressionICTypeInfo);
-				DebugPrint.print(debugMessage);
 				return null;
 			}
 		}

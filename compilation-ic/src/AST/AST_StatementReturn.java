@@ -8,7 +8,6 @@ import SEMANTIC.SEMANTIC_NoInitForReturnTypeException;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
-import UTILS.DebugPrint;
 
 public class AST_StatementReturn extends AST_Statement{
 	public AST_Exp returnedExpression;
@@ -19,7 +18,6 @@ public class AST_StatementReturn extends AST_Statement{
 	
 	private SEMANTIC_ICTypeInfo validateEmptyReturn(){
 		if (returnedExpression != null){
-			DebugPrint.print("AST_STMT_RETURN.validateEmptyReturn: The statement returns a value.");
 			return null;
 		}
 		
@@ -28,20 +26,15 @@ public class AST_StatementReturn extends AST_Statement{
 	
 	private SEMANTIC_ICTypeInfo validateValuedReturn(String className) throws SEMANTIC_SemanticErrorException{
 		if (returnedExpression == null){
-			DebugPrint.print("AST_STMT_RETURN.validateValuedReturn: The statement doesn't return a value.");
 			return null;
 		}
 		
 		SEMANTIC_ICTypeInfo expType = returnedExpression.validate(className);
 		if (expType == null){
-			DebugPrint.print("AST_STMT_RETURN.validateValuedReturn: The returned expression isn't valid.");
 			return null;
 		}
 		
 		if (!SEMANTIC_SymbolTable.validatePredeccessor(expectedReturnType, expType)){
-			String debugMessage = String.format("AST_STMT_RETURN.validateValuedReturn: return mismatch, expected : %s, found : %s.",
-					expectedReturnType, expType);
-			DebugPrint.print(debugMessage);
 			return null;
 		}
 		

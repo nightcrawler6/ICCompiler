@@ -5,7 +5,6 @@ import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
 import SEMANTIC.SEMANTIC_SymbolTable;
 import SEMANTIC.SEMANTIC_VariableSymbolInfo;
-import UTILS.DebugPrint;
 
 public class AST_FormalsList extends AST_Node{
 	public SEMANTIC_ICTypeInfo formalICType;
@@ -27,22 +26,13 @@ public class AST_FormalsList extends AST_Node{
 		else{
 			formalICType=this.formal_type.validate(className);
 			if (formalICType == null){
-				String debugMessage = String.format("AST_FORMALS_LIST.validate: The formal '%s' of the method '%s.%s' has an invalid type.",
-						formal_name, className, currentFunctionName);
-				DebugPrint.print(debugMessage);
 				return null;
 			}
 			if(SEMANTIC_SymbolTable.doesSymbolExistInCurrentScope(formal_name)){
-				String debugMessage = String.format("AST_FORMALS_LIST.validate: The formal '%s' of the method '%s.%s' is redefined.",
-						formal_name, className, currentFunctionName);
-				DebugPrint.print(debugMessage);
 				return null;
 			}
 			SEMANTIC_VariableSymbolInfo formalInfo=new SEMANTIC_VariableSymbolInfo(formal_name, formalICType);
 			if(SEMANTIC_SymbolTable.addFormalToMethod(className,currentFunctionName, formalInfo)==false){
-				String debugMessage = String.format("AST_FORMALS_LIST.validate: Failed adding the formal '%s' to the method '%s.%s'.",
-						formal_name, className, currentFunctionName);
-				DebugPrint.print(debugMessage);
 				return null;
 			}
 			
@@ -51,7 +41,6 @@ public class AST_FormalsList extends AST_Node{
 			if (this.tail != null){
 				tail.currentFunctionName = this.currentFunctionName;
 				if (tail.validate(className) == null){
-					DebugPrint.print("AST_FORMALS_LIST.validate: The tail isn't valid.");
 					return null;
 				}
 			}

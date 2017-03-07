@@ -4,7 +4,6 @@ import IR.IR_EXP;
 import IR.IR_ExpLocationSub;
 import SEMANTIC.SEMANTIC_ICTypeInfo;
 import SEMANTIC.SEMANTIC_SemanticErrorException;
-import UTILS.DebugPrint;
 
 public class AST_LocationSub extends AST_Location{
 	public AST_Exp var;
@@ -20,12 +19,10 @@ public class AST_LocationSub extends AST_Location{
 		SEMANTIC_ICTypeInfo subscriptInfo = subscript.validate(className);
 		
 		if(!subscriptInfo.isFlatICType(SEMANTIC_ICTypeInfo.IC_TYPE_INT)){
-			DebugPrint.print("AST_LOCATION_SUBSCRIPT.validate: the array index is not an integer. index : " + subscriptInfo);
 			return null;			
 		}
 
 		if(varInfo.pointerDepth<1){
-			DebugPrint.print("AST_LOCATION_SUBSCRIPT.validate: the expression is not an array. exp : " + varInfo);
 			return null;
 		}
 			
