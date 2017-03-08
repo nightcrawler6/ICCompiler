@@ -39,10 +39,16 @@ public class IR_ExpLocationSub extends IR_EXP{
 		printed.appendNL(String.format("lw %s,0(%s)", 
 									   arrayLengthTemp.getName(), 
 									   arrayBaseTemp.getName()));
+		
 		printed.appendNL(String.format("bge %s,%s,%s", 
 									   offsetTemp.getName(), 
 									   arrayLengthTemp.getName(),
 									   IR_Node.ERROR_LABEL_NAME));
+		
+		printed.appendNL(String.format("blt %s,%s,%s", 
+				 				   offsetTemp.getName(), 
+				 				   zeroTemp.getName(),
+				 				   IR_Node.ERROR_LABEL_NAME));
 		
 		printed.appendNL(String.format("addi %s,%s,1", 
 									   offsetTemp.getName(), 

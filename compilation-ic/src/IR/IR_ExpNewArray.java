@@ -45,6 +45,14 @@ public class IR_ExpNewArray extends IR_EXP{
 		CODEGEN_Temporary generatedNumOfElementsPlusOne = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_StringAttacher printed = new CODEGEN_StringAttacher();
 		CODEGEN_Temporary fourTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
+		
+		CODEGEN_Temporary oneTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
+		printed.appendNL(String.format("li %s,1",oneTemp.getName()));
+		printed.appendNL(String.format("blt %s,%s,%s",
+					generatedNumOfElements.getName(),
+					oneTemp.getName(),
+					IR_Node.ERROR_LABEL_NAME));
+		
 		printed.appendNL(String.format("li %s,4",fourTemp.getName()));
 		printed.appendNL(String.format("addi %s,%s,1", generatedNumOfElementsPlusOne.getName(), generatedNumOfElements.getName()));
 		CODEGEN_Temporary generatedSize = CODEGEN_TemporaryFactory.getAndAddNewTemp();
