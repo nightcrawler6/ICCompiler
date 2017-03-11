@@ -22,9 +22,9 @@ public class IR_ExpNewArray extends IR_EXP{
 		CODEGEN_Temporary currIndex = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary tempIterator = CODEGEN_TemporaryFactory.getAndAddNewTemp();
 		CODEGEN_Temporary zeroTemp = CODEGEN_TemporaryFactory.getAndAddNewTemp();
-		String initArrayLabel = String.format("Label_%d_init_array", CODEGEN_AssemblyFilePrinter.addLabelIndex());
-		String startLoopLabel = String.format("Label_%d_start_loop", CODEGEN_AssemblyFilePrinter.addLabelIndex());
-		String endLoopLabel =  String.format("Label_%d_end_loop", CODEGEN_AssemblyFilePrinter.addLabelIndex());
+		String initArrayLabel = String.format("Label_%d_initialize_array", CODEGEN_AssemblyFilePrinter.addLabelIndex());
+		String startLoopLabel = String.format("Label_%d_begin_loop", CODEGEN_AssemblyFilePrinter.addLabelIndex());
+		String endLoopLabel =  String.format("Label_%d_finish_loop", CODEGEN_AssemblyFilePrinter.addLabelIndex());
 		printed.appendNL(initArrayLabel+":");
 		printed.appendNL(String.format("li %s,0", zeroTemp.getName()));
 		printed.appendNL(String.format("li %s,1", currIndex.getName()));

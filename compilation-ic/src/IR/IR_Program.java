@@ -15,14 +15,14 @@ import SEMANTIC.SEMANTIC_TempsPastLimitException;
 
 public class IR_Program extends IR_Node {
 
-	private static final String MAIN_WRAPPER_LABEL =String.format("Label_%d_main_wrapper",CODEGEN_AssemblyFilePrinter.addLabelIndex());
+	private static final String MAIN_WRAPPER_LABEL =String.format("Label_%d_main_code",CODEGEN_AssemblyFilePrinter.addLabelIndex());
 	public IR_ClassDeclList classDeclList;
 	
 	public static final String STRLEN_FUNCTION_LABEL = AST_Method.METHOD_LABEL_PREFIX + "strlen";
 	public static final String MEMCPY_FUNCTION_LABEL = AST_Method.METHOD_LABEL_PREFIX + "memcpy";
 	public static final String STRCAT_FUNCTION_LABEL = AST_Method.METHOD_LABEL_PREFIX + "strcat";
-	public static final String WHILE_START_LABEL_SUFFIX = "_while_start";
-	public static final String WHILE_END_LABEL_SUFFIX = "_while_end";
+	public static final String WHILE_START_LABEL_SUFFIX = "_while_begin";
+	public static final String WHILE_END_LABEL_SUFFIX = "_while_finish";
 	
 	public static final int STATIC_FUNC_FIRST_ARG_OFFSET = AST_Node.FRAME_OFFSET_OF_THE_THIS_ARGUMENT;
 	

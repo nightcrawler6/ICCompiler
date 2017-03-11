@@ -10,7 +10,7 @@ public abstract class IR_StatementCondition extends IR_Statement{
 	public IR_StatementCondition(IR_EXP cond, IR_Statement body, String labelName){
 		this.cond = cond;
 		this.body = body;
-		this.startLabel = new IR_AsmLabel(labelName + "_start");
-		this.endLabel = new IR_AsmLabel(labelName + "_end");
+		this.startLabel = new IR_AsmLabel(labelName + "_begin");
+		this.endLabel = new IR_AsmLabel(labelName + "_finish");
 	}
 }

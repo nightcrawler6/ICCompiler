@@ -117,8 +117,8 @@ public class IR_ExpBinop extends IR_EXP {
 			}
 		}
 		else{			
-			String branchLabelOK = String.format("Label_%d_binop_ok", CODEGEN_AssemblyFilePrinter.addLabelIndex());
-			String branchLabelEnd =  String.format("Label_%d_binop_end", CODEGEN_AssemblyFilePrinter.addLabelIndex());
+			String branchLabelOK = String.format("Label_%d_binop_verified", CODEGEN_AssemblyFilePrinter.addLabelIndex());
+			String branchLabelEnd =  String.format("Label_%d_binop_finished", CODEGEN_AssemblyFilePrinter.addLabelIndex());
 			printed.appendNL(String.format("li %s,0",result.getName()));
 			printed.appendNL(String.format("%s %s,%s,%s", findSpecificBinop(),t1.getName(), t2.getName(), branchLabelOK));
 			printed.appendNL(String.format("%s %s,%s,%s", getOppositeConditionalOperation(),t1.getName(),t2.getName(),branchLabelEnd));
